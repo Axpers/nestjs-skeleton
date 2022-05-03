@@ -1,3 +1,4 @@
+import { UserPostDTO } from './dto/userPost.dto';
 import { User } from './user.model';
 import { Injectable } from '@nestjs/common';
 
@@ -30,7 +31,7 @@ export class UserService {
     this.users = this.users.filter((e) => e.id !== id);
   }
 
-  addUser(user: User): User {
+  addUser(user: UserPostDTO): User {
     this.users.push(user);
     return user;
   }
