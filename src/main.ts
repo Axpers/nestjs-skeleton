@@ -1,3 +1,4 @@
+import { logger } from 'src/middlewares/logger.middleware';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -10,6 +11,9 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+
+  app.use(logger);
+
   await app.listen(4000, '0.0.0.0');
 }
 bootstrap();
