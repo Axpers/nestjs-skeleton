@@ -1,9 +1,9 @@
-import { UserPostDTO } from './dto/userPost.dto';
+import { UserPostDTO } from './dto/user-post.dto';
 import { User } from './user.model';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   users: User[];
 
   constructor() {
