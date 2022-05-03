@@ -8,22 +8,22 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
-  getUsers() {
+  async getUsers(): Promise<User[]> {
     return this.usersService.getUsers();
   }
 
   @Get(':id')
-  getUser(@Param('id') id): User {
+  async getUser(@Param('id') id): Promise<User> {
     return this.usersService.getUser(Number(id));
   }
 
   @Delete(':id')
-  deleteUser(@Param('id') id: string): void {
+  async deleteUser(@Param('id') id: string): Promise<void> {
     this.usersService.deleteUser(Number(id));
   }
 
   @Post()
-  addUser(@Body() userPostDTO: UserPostDTO): User {
+  async addUser(@Body() userPostDTO: UserPostDTO): Promise<User> {
     return this.usersService.addUser(userPostDTO);
   }
 }
