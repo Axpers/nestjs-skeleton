@@ -52,4 +52,9 @@ export class UsersService {
       }
     }
   }
+
+  async login(userPostDTO: UserPostDTO): Promise<boolean> {
+    const user = await this.usersRepository.findOne(userPostDTO.name);
+    return user && (await bcrypt.compare(userPostDTO.password, user.password));
+  }
 }
