@@ -4,10 +4,10 @@ export class UserPostDTO {
   @IsDefined()
   @IsNotEmpty()
   @IsNumber()
-  id: number;
+  name: string;
 
   @IsDefined()
   @IsNotEmpty()
   @IsString()
-  name: string;
+  password: string;
 }
