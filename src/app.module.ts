@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -16,7 +15,7 @@ import { UsersModule } from './users/users.module';
       database: 'skeleton',
       autoLoadEntities: true,
       synchronize: true,
-      retryAttempts: 5,
+      retryAttempts: 2,
     }),
   ],
   controllers: [AppController],
