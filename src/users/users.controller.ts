@@ -1,7 +1,16 @@
 import { User } from './user.entity';
 import { UserPostDTO } from './dto/user-post.dto';
 import { UsersService } from './users.service';
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+} from '@nestjs/common';
+import { IsUUID } from 'class-validator';
 
 @Controller('users')
 export class UsersController {
@@ -13,12 +22,12 @@ export class UsersController {
   }
 
   @Get(':id')
-  async getUser(@Param('id') id: string): Promise<User> {
+  async getUser(@Param('id', ParseUUIDPipe) id: string): Promise<User> {
     return this.usersService.getUser(id);
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<void> {
+  async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     this.usersService.deleteUser(id);
   }
 

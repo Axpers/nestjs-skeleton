@@ -5,6 +5,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -23,7 +24,9 @@ export class UsersService {
   }
 
   async getUser(id: string): Promise<User> {
-    return this.usersRepository.findOne(id);
+    const user = await this.usersRepository.findOne(id);
+    if (user) return user;
+    else throw new NotFoundException();
   }
 
   async deleteUser(id: string): Promise<void> {
