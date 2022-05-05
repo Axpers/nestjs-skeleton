@@ -10,7 +10,6 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
-import { IsUUID } from 'class-validator';
 
 @Controller('users')
 export class UsersController {
@@ -34,5 +33,10 @@ export class UsersController {
   @Post()
   async addUser(@Body() userPostDTO: UserPostDTO): Promise<void> {
     this.usersService.addUser(userPostDTO);
+  }
+
+  @Post('login')
+  async login(@Body() userPostDTO: UserPostDTO): Promise<boolean> {
+    return await this.usersService.login(userPostDTO);
   }
 }
