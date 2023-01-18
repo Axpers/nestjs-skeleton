@@ -24,7 +24,7 @@ export class UsersService {
   }
 
   async getUser(id: string): Promise<User> {
-    const user = await this.usersRepository.findOne(id);
+    const user = await this.usersRepository.findOneBy({id: Number(id)});
     if (user) return user;
     else throw new NotFoundException();
   }
@@ -57,7 +57,7 @@ export class UsersService {
   }
 
   async login(userPostDTO: UserPostDTO): Promise<boolean> {
-    const user = await this.usersRepository.findOne(userPostDTO.name);
+    const user = await this.usersRepository.findOneBy({name: userPostDTO.name});
     return user && (await bcrypt.compare(userPostDTO.password, user.password));
   }
 }
