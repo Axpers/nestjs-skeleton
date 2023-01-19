@@ -7,12 +7,12 @@ import { UsersModule } from './users/users.module';
   imports: [
     UsersModule,
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '192.168.1.17',
-      port: 3306,
-      username: 'skeleton',
-      password: 'skeleton',
-      database: 'skeleton',
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'skeleton-db-user',
+      password: 'skeleton-db-password',
+      database: 'skeleton-db-name',
       autoLoadEntities: true,
       synchronize: true,
       retryAttempts: 2,

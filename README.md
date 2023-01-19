@@ -5,23 +5,18 @@
 pnpm install
 ```
 
+
 ## Run : 
 ```
 nest start --watch
 ```
 
-## Manipulate docker :
 
+## Manipulate docker :
 
 ### Create the database and the user
 ```docker
-docker run --name skeleton-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root  -e MYSQL_DATABASE=skeleton -e MYSQL_USER=skeleton -e MYSQL_PASSWORD=skeleton -d mysql:8.0.29-oracle
-```
-
-### Use mysql command line
-```docker
-docker container exec -it skeleton-db bash
-mysql -u root -p
+docker run --name skeleton-db -e POSTGRES_USER=skeleton-db-user  -e POSTGRES_PASSWORD=skeleton-db-password -e POSTGRES_DB=skeleton-db-name -p 5432:5432 -d postgres
 ```
 
 ### Build api image
