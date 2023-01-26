@@ -5,10 +5,14 @@ import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
 import { UserRegisterDto } from '../controllers/requests/user-register.dto';
+import { UserThrowService } from './user-throw.service';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private throwService: UserThrowService,
+  ) {}
 
   async getUsers(): Promise<User[]> {
     return this.userRepository.getUsers();
@@ -17,8 +21,8 @@ export class UserService {
   async getUser(id: string): Promise<User> {
     const user = await this.userRepository.getUserById(id);
 
-    if (user) return user;
-    else throw new NotFoundException();
+    if (user === null) throw new NotFoundException('User could not be found');
+    return user;
   }
 
   async deleteUser(id: string): Promise<void> {
@@ -27,6 +31,8 @@ export class UserService {
   }
 
   async saveUser(userRegisterDto: UserRegisterDto): Promise<void> {
+    await this.throwService.throwIfUserAlreadyExist(userRegisterDto.email);
+
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(userRegisterDto.password, salt);
 
