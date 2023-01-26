@@ -38,8 +38,10 @@ export class UserService {
     const { name, password } = userLoginDto;
     const user = await this.userRepository.getUserByName(name);
 
-    const hashedPassword = user?.password ?? null;
+    if (user === null) return false;
+
+    const hashedPassword = user.password;
     const isPasswordMatching = await bcrypt.compare(password, hashedPassword);
-    return user && isPasswordMatching;
+    return isPasswordMatching;
   }
 }

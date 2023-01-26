@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserLoginDto } from '../controllers/requests/user-login.dto';
@@ -46,20 +42,18 @@ export class UserApiRepository implements UserRepository {
   }
 
   async saveUser(userLoginDto: UserLoginDto): Promise<void> {
+    const potentialExistingUser = await this.getUserByName(userLoginDto.name);
+    const isUsernameAlreadyTaken =
+      potentialExistingUser?.name === userLoginDto.name;
+    if (isUsernameAlreadyTaken) {
+      throw new ConflictException('Username already taken');
+    }
+
     const userEntity = this.userRepository.create({
       name: userLoginDto.name,
       password: userLoginDto.password,
     });
 
-    try {
-      await this.userRepository.save(userEntity);
-    } catch (error) {
-      if (error.code === '23505') {
-        // duplicate username
-        throw new ConflictException('Username already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
-    }
+    await this.userRepository.save(userEntity);
   }
 }
