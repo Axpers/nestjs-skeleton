@@ -1,16 +1,9 @@
 import { UserLoginDto } from './requests/user-login.dto';
 import { UserService } from '../services/user.service';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseUUIDPipe,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserReponse } from './responses/user-response.dto';
 import { UserDomainToControllerAdapter } from './user-domain-controller.adapter';
+import { UserIdParamDto } from 'src/core/web-module/parameters/user-id-param.dto';
 
 @Controller('users')
 export class UserController {
@@ -27,15 +20,15 @@ export class UserController {
     );
   }
 
-  @Get(':id')
-  async getUser(@Param('id', ParseUUIDPipe) id: string): Promise<UserReponse> {
-    const user = await this.usersService.getUser(id);
+  @Get(':userId')
+  async getUser(@Param() userIdParamDto: UserIdParamDto): Promise<UserReponse> {
+    const user = await this.usersService.getUser(userIdParamDto.userId);
     return this.userDomainToControllerAdapter.adaptUser(user);
   }
 
-  @Delete(':id')
-  async deleteUser(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    this.usersService.deleteUser(id);
+  @Delete(':userId')
+  async deleteUser(@Param() userIdParamDto: UserIdParamDto): Promise<void> {
+    this.usersService.deleteUser(userIdParamDto.userId);
   }
 
   @Post()
