@@ -7,8 +7,11 @@ export class UserEntityToDomainAdapter {
   adaptUser(user: UserEntity): User {
     return {
       id: user.id,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
       password: user.password,
+      phoneNumber: user.phoneNumber,
     };
   }
 }

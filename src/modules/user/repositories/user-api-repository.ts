@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserLoginDto } from '../controllers/requests/user-login.dto';
+import { UserRegisterDto } from '../controllers/requests/user-register.dto';
 import { User } from '../domain/user';
 import { UserRepository } from '../domain/user-repository';
 import { UserEntity } from './entities/user.entity';
@@ -30,8 +30,8 @@ export class UserApiRepository implements UserRepository {
     return this.userEntityToDomainAdapter.adaptUser(userEntity);
   }
 
-  async getUserByName(name: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOneBy({ name });
+  async getUserByEmail(email: string): Promise<User | null> {
+    const userEntity = await this.userRepository.findOneBy({ email });
 
     if (userEntity === null) return null;
     return this.userEntityToDomainAdapter.adaptUser(userEntity);
@@ -41,19 +41,17 @@ export class UserApiRepository implements UserRepository {
     await this.userRepository.delete(id);
   }
 
-  async saveUser(userLoginDto: UserLoginDto): Promise<void> {
-    const potentialExistingUser = await this.getUserByName(userLoginDto.name);
+  async saveUser(userRegisterDto: UserRegisterDto): Promise<void> {
+    const potentialExistingUser = await this.getUserByEmail(
+      userRegisterDto.email,
+    );
     const isUsernameAlreadyTaken =
-      potentialExistingUser?.name === userLoginDto.name;
+      potentialExistingUser?.email === userRegisterDto.email;
     if (isUsernameAlreadyTaken) {
-      throw new ConflictException('Username already taken');
+      throw new ConflictException('Email already taken');
     }
 
-    const userEntity = this.userRepository.create({
-      name: userLoginDto.name,
-      password: userLoginDto.password,
-    });
-
+    const userEntity = this.userRepository.create({ ...userRegisterDto });
     await this.userRepository.save(userEntity);
   }
 }

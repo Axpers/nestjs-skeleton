@@ -4,6 +4,7 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserReponse } from './responses/user-response.dto';
 import { UserDomainToControllerAdapter } from './user-domain-controller.adapter';
 import { UserIdParamDto } from 'src/core/web-module/parameters/user-id-param.dto';
+import { UserRegisterDto } from './requests/user-register.dto';
 
 @Controller('users')
 export class UserController {
@@ -31,9 +32,9 @@ export class UserController {
     this.usersService.deleteUser(userIdParamDto.userId);
   }
 
-  @Post()
-  async saveUser(@Body() userLoginDto: UserLoginDto): Promise<void> {
-    this.usersService.saveUser(userLoginDto);
+  @Post('register')
+  async saveUser(@Body() userRegisterDto: UserRegisterDto): Promise<void> {
+    this.usersService.saveUser(userRegisterDto);
   }
 
   @Post('login')

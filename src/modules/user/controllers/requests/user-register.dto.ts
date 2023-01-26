@@ -1,34 +1,44 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  IsDefined,
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+} from 'class-validator';
 
-@Entity()
-export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column()
+export class UserRegisterDto {
+  @IsDefined()
+  @IsNotEmpty()
+  @IsString()
   firstName: string;
 
-  @Column()
+  @IsDefined()
+  @IsNotEmpty()
+  @IsString()
   lastName: string;
 
-  @Column()
+  @IsDefined()
+  @IsNotEmpty()
+  @IsEmail()
   email: string;
 
-  @Column()
+  @IsDefined()
+  @IsNotEmpty()
+  @IsString()
   password: string;
 
-  @Column()
+  @IsDefined()
+  @IsNotEmpty()
+  @IsPhoneNumber()
   phoneNumber: string;
 
   constructor(
-    id: string,
     firstName: string,
     lastName: string,
     email: string,
     password: string,
     phoneNumber: string,
   ) {
-    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

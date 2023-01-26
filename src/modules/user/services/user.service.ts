@@ -4,6 +4,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
+import { UserRegisterDto } from '../controllers/requests/user-register.dto';
 
 @Injectable()
 export class UserService {
@@ -25,18 +26,19 @@ export class UserService {
     this.userRepository.deleteUser(user.id);
   }
 
-  async saveUser(userLoginDto: UserLoginDto): Promise<void> {
-    const { name, password } = userLoginDto;
-
+  async saveUser(userRegisterDto: UserRegisterDto): Promise<void> {
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(userRegisterDto.password, salt);
 
-    await this.userRepository.saveUser({ name, password: hashedPassword });
+    await this.userRepository.saveUser({
+      ...userRegisterDto,
+      password: hashedPassword,
+    });
   }
 
   async login(userLoginDto: UserLoginDto): Promise<boolean> {
-    const { name, password } = userLoginDto;
-    const user = await this.userRepository.getUserByName(name);
+    const { email, password } = userLoginDto;
+    const user = await this.userRepository.getUserByEmail(email);
 
     if (user === null) return false;
 

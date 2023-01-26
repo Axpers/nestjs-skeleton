@@ -7,7 +7,10 @@ export class UserDomainToControllerAdapter {
   adaptUser(user: User): UserReponse {
     return {
       id: user.id,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
     };
   }
 }

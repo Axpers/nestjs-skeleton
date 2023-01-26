@@ -1,18 +1,18 @@
-import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { IsDefined, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class UserLoginDto {
   @IsDefined()
   @IsNotEmpty()
-  @IsString()
-  name: string;
+  @IsEmail()
+  email: string;
 
   @IsDefined()
   @IsNotEmpty()
   @IsString()
   password: string;
 
-  constructor(name: string, password: string) {
-    this.name = name;
+  constructor(email: string, password: string) {
+    this.email = email;
     this.password = password;
   }
 }
