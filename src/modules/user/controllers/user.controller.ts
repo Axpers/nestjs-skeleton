@@ -29,12 +29,12 @@ export class UserController {
 
   @Delete(':userId')
   async deleteUser(@Param() userIdParamDto: UserIdParamDto): Promise<void> {
-    this.usersService.deleteUser(userIdParamDto.userId);
+    await this.usersService.deleteUser(userIdParamDto.userId);
   }
 
   @Post('register')
   async saveUser(@Body() userRegisterDto: UserRegisterDto): Promise<void> {
-    this.usersService.saveUser(userRegisterDto);
+    await this.usersService.saveUser(userRegisterDto);
   }
 
   @Post('login')
