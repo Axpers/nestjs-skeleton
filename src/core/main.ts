@@ -15,7 +15,7 @@ async function bootstrap() {
 
   app.use(morgan('dev'));
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   await app.listen(4000, '0.0.0.0');
 }
