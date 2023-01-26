@@ -9,6 +9,8 @@ import { UserModule } from '../modules/user/user.module';
     UserModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       type: 'postgres',
       host: process.env.DATABASE_HOST,
       port: Number(process.env.DATABASE_PORT),
