@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserRegisterDto } from '../controllers/requests/user-register.dto';
@@ -42,15 +42,6 @@ export class UserApiRepository implements UserRepository {
   }
 
   async saveUser(userRegisterDto: UserRegisterDto): Promise<void> {
-    const potentialExistingUser = await this.getUserByEmail(
-      userRegisterDto.email,
-    );
-    const isUsernameAlreadyTaken =
-      potentialExistingUser?.email === userRegisterDto.email;
-    if (isUsernameAlreadyTaken) {
-      throw new ConflictException('Email already taken');
-    }
-
     const userEntity = this.userRepository.create({ ...userRegisterDto });
     await this.userRepository.save(userEntity);
   }
