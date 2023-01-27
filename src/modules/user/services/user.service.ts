@@ -5,13 +5,13 @@ import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
 import { UserRegisterDto } from '../controllers/requests/user-register.dto';
-import { UserThrowService } from './user-throw.service';
+import { UserUtilsService } from './user-utils.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private userRepository: UserRepository,
-    private throwService: UserThrowService,
+    private utilsService: UserUtilsService,
   ) {}
 
   async getUsers(): Promise<User[]> {
@@ -31,7 +31,7 @@ export class UserService {
   }
 
   async saveUser(userRegisterDto: UserRegisterDto): Promise<void> {
-    await this.throwService.throwIfUserAlreadyExist(userRegisterDto.email);
+    await this.utilsService.throwIfUserAlreadyExist(userRegisterDto.email);
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(userRegisterDto.password, salt);

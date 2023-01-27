@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { UserRepository } from '../domain/user-repository';
 
 @Injectable()
-export class UserThrowService {
+export class UserUtilsService {
   constructor(private userRepository: UserRepository) {}
 
   async throwIfUserAlreadyExist(email: string) {
