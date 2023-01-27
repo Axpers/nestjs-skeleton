@@ -45,4 +45,11 @@ export class UserApiRepository implements UserRepository {
     const userEntity = this.userRepository.create({ ...userCreateRequest });
     await this.userRepository.save(userEntity);
   }
+
+  async updateUser(
+    userId: string,
+    userUpdateRequest: UserCreateUpdateRequest,
+  ): Promise<void> {
+    await this.userRepository.update(userId, userUpdateRequest);
+  }
 }

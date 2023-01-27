@@ -42,6 +42,21 @@ export class UserService {
     });
   }
 
+  async updateUser(
+    userId: string,
+    userUpdateRequest: UserCreateUpdateRequest,
+  ): Promise<void> {
+    await this.utilsService.throwIfUserDoesNotAlreadyExist(userId);
+
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(userUpdateRequest.password, salt);
+
+    await this.userRepository.updateUser(userId, {
+      ...userUpdateRequest,
+      password: hashedPassword,
+    });
+  }
+
   async login(userLoginRequest: UserLoginRequest): Promise<boolean> {
     const { email, password } = userLoginRequest;
     const user = await this.userRepository.getUserByEmail(email);

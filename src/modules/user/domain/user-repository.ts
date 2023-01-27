@@ -13,4 +13,9 @@ export abstract class UserRepository {
   abstract createUser(
     userCreateRequest: UserCreateUpdateRequest,
   ): Promise<void>;
+
+  abstract updateUser(
+    userId: string,
+    userUpdateRequest: UserCreateUpdateRequest,
+  ): Promise<void>;
 }
