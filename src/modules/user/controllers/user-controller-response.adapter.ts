@@ -3,7 +3,7 @@ import { User } from '../domain/user';
 import { UserReponse } from './responses/user-response.dto';
 
 @Injectable()
-export class UserDomainToControllerAdapter {
+export class UserControllerReponseAdapter {
   adaptUser(user: User): UserReponse {
     return {
       id: user.id,

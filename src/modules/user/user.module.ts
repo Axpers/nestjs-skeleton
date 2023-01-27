@@ -6,8 +6,8 @@ import { Module } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { UserEntity } from './repositories/entities/user.entity';
-import { UserEntityToDomainAdapter } from './repositories/user-entity-domain.adapter';
-import { UserDomainToControllerAdapter } from './controllers/user-domain-controller.adapter';
+import { UserEntityReponseAdapter } from './repositories/user-repository-reponse.adapter';
+import { UserControllerReponseAdapter } from './controllers/user-controller-response.adapter';
 import { UserUtilsService } from './services/user-utils.service';
 
 @Module({
@@ -16,8 +16,8 @@ import { UserUtilsService } from './services/user-utils.service';
   providers: [
     UserService,
     UserUtilsService,
-    UserEntityToDomainAdapter,
-    UserDomainToControllerAdapter,
+    UserEntityReponseAdapter,
+    UserControllerReponseAdapter,
     { provide: UserRepository, useClass: UserApiRepository },
   ],
 })
