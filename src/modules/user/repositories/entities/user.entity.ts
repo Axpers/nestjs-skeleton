@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -20,6 +26,12 @@ export class UserEntity {
   @Column()
   phoneNumber: string;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
   constructor(
     id: string,
     firstName: string,
@@ -27,6 +39,8 @@ export class UserEntity {
     email: string,
     password: string,
     phoneNumber: string,
+    createdAt: Date,
+    updatedAt: Date,
   ) {
     this.id = id;
     this.firstName = firstName;
@@ -34,5 +48,7 @@ export class UserEntity {
     this.email = email;
     this.password = password;
     this.phoneNumber = phoneNumber;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }

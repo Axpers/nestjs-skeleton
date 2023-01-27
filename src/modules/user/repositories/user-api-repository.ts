@@ -5,21 +5,21 @@ import { UserRegisterDto } from '../controllers/requests/user-register.dto';
 import { User } from '../domain/user';
 import { UserRepository } from '../domain/user-repository';
 import { UserEntity } from './entities/user.entity';
-import { UserEntityToDomainAdapter } from './user-entity-domain.adapter';
+import { UserEntityReponseAdapter } from './user-repository-reponse.adapter';
 
 @Injectable()
 export class UserApiRepository implements UserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
-    private userEntityToDomainAdapter: UserEntityToDomainAdapter,
+    private userEntityReponseAdapter: UserEntityReponseAdapter,
   ) {}
 
   async getUsers(): Promise<User[]> {
     const userEntities = await this.userRepository.find();
 
     return userEntities.map((userEntity) =>
-      this.userEntityToDomainAdapter.adaptUser(userEntity),
+      this.userEntityReponseAdapter.adaptUser(userEntity),
     );
   }
 
@@ -27,14 +27,14 @@ export class UserApiRepository implements UserRepository {
     const userEntity = await this.userRepository.findOneBy({ id });
 
     if (userEntity === null) return null;
-    return this.userEntityToDomainAdapter.adaptUser(userEntity);
+    return this.userEntityReponseAdapter.adaptUser(userEntity);
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
     const userEntity = await this.userRepository.findOneBy({ email });
 
     if (userEntity === null) return null;
-    return this.userEntityToDomainAdapter.adaptUser(userEntity);
+    return this.userEntityReponseAdapter.adaptUser(userEntity);
   }
 
   async deleteUser(id: string): Promise<void> {

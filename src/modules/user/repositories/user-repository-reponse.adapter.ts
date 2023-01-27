@@ -3,7 +3,7 @@ import { User } from '../domain/user';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
-export class UserEntityToDomainAdapter {
+export class UserEntityReponseAdapter {
   adaptUser(user: UserEntity): User {
     return {
       id: user.id,
@@ -12,6 +12,8 @@ export class UserEntityToDomainAdapter {
       email: user.email,
       password: user.password,
       phoneNumber: user.phoneNumber,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
   }
 }
