@@ -1,10 +1,10 @@
-import { UserLoginDto } from './requests/user-login.dto';
 import { UserService } from '../services/user.service';
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserReponse } from './responses/user-response.dto';
 import { UserControllerReponseAdapter } from './user-controller-response.adapter';
 import { UserIdParamDto } from 'src/core/web-module/parameters/user-id-param.dto';
-import { UserRegisterDto } from './requests/user-register.dto';
+import { UserCreateUpdateRequest } from './requests/user-create-update-request.dto';
+import { UserLoginRequest } from './requests/user-login-request.dto';
 
 @Controller('users')
 export class UserController {
@@ -33,12 +33,14 @@ export class UserController {
   }
 
   @Post('register')
-  async saveUser(@Body() userRegisterDto: UserRegisterDto): Promise<void> {
-    await this.usersService.saveUser(userRegisterDto);
+  async saveUser(
+    @Body() userCreateRequest: UserCreateUpdateRequest,
+  ): Promise<void> {
+    await this.usersService.createUser(userCreateRequest);
   }
 
   @Post('login')
-  async login(@Body() userLoginDto: UserLoginDto): Promise<boolean> {
-    return await this.usersService.login(userLoginDto);
+  async login(@Body() userLoginRequest: UserLoginRequest): Promise<boolean> {
+    return await this.usersService.login(userLoginRequest);
   }
 }

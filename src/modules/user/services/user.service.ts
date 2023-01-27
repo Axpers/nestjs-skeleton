@@ -1,10 +1,10 @@
-import { UserLoginDto } from '../controllers/requests/user-login.dto';
+import { UserLoginRequest } from '../controllers/requests/user-login-request.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
-import { UserRegisterDto } from '../controllers/requests/user-register.dto';
+import { UserCreateUpdateRequest } from '../controllers/requests/user-create-update-request.dto';
 import { UserUtilsService } from './user-utils.service';
 
 @Injectable()
@@ -30,20 +30,20 @@ export class UserService {
     this.userRepository.deleteUser(user.id);
   }
 
-  async saveUser(userRegisterDto: UserRegisterDto): Promise<void> {
-    await this.utilsService.throwIfUserAlreadyExist(userRegisterDto.email);
+  async createUser(userCreateDto: UserCreateUpdateRequest): Promise<void> {
+    await this.utilsService.throwIfUserAlreadyExist(userCreateDto.email);
 
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(userRegisterDto.password, salt);
+    const hashedPassword = await bcrypt.hash(userCreateDto.password, salt);
 
-    await this.userRepository.saveUser({
-      ...userRegisterDto,
+    await this.userRepository.createUser({
+      ...userCreateDto,
       password: hashedPassword,
     });
   }
 
-  async login(userLoginDto: UserLoginDto): Promise<boolean> {
-    const { email, password } = userLoginDto;
+  async login(userLoginRequest: UserLoginRequest): Promise<boolean> {
+    const { email, password } = userLoginRequest;
     const user = await this.userRepository.getUserByEmail(email);
 
     if (user === null) return false;
