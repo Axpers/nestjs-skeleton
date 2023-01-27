@@ -12,8 +12,6 @@ export class UserEntityReponseAdapter {
       email: user.email,
       password: user.password,
       phoneNumber: user.phoneNumber,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
     };
   }
 }

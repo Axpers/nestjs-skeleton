@@ -5,6 +5,4 @@ export interface User {
   email: string;
   password: string;
   phoneNumber: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
