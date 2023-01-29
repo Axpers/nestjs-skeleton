@@ -7,27 +7,22 @@ import {
 } from 'class-validator';
 
 export class UserCreateUpdateRequest {
-  @IsDefined()
   @IsNotEmpty()
   @IsString()
   firstName: string;
 
-  @IsDefined()
   @IsNotEmpty()
   @IsString()
   lastName: string;
 
-  @IsDefined()
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
-  @IsDefined()
   @IsNotEmpty()
   @IsString()
   password: string;
 
-  @IsDefined()
   @IsNotEmpty()
   @IsPhoneNumber()
   phoneNumber: string;
