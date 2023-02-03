@@ -5,6 +5,9 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import * as morgan from 'morgan';
 
 async function bootstrap() {
