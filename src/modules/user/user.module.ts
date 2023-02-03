@@ -9,11 +9,13 @@ import { UserEntity } from './repositories/entities/user.entity';
 import { UserEntityReponseAdapter } from './repositories/user-repository-reponse.adapter';
 import { UserControllerReponseAdapter } from './controllers/user-controller-response.adapter';
 import { UserUtilsService } from './services/user-utils.service';
+import { AuthUtilsService } from '../auth/services/auth-utils.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [
+    AuthUtilsService,
     UserService,
     UserUtilsService,
     UserEntityReponseAdapter,

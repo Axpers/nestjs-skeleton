@@ -1,18 +1,9 @@
 import { UserService } from '../services/user.service';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { UserReponse } from './responses/user-response.dto';
 import { UserControllerReponseAdapter } from './user-controller-response.adapter';
 import { UserIdParam } from 'src/core/parameters/user-id-param.dto';
 import { UserUpdateRequest } from './requests/user-update-request.dto';
-import { UserLoginRequest } from './requests/user-login-request.dto';
 
 @Controller('users')
 export class UserController {
@@ -46,10 +37,5 @@ export class UserController {
     @Body() userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
     await this.userService.updateUser(userIdParam.userId, userUpdateRequest);
-  }
-
-  @Post('login')
-  async login(@Body() userLoginRequest: UserLoginRequest): Promise<boolean> {
-    return await this.userService.login(userLoginRequest);
   }
 }

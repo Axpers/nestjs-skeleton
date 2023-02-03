@@ -1,17 +1,16 @@
-import { UserLoginRequest } from '../controllers/requests/user-login-request.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
-
-import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
 import { UserUpdateRequest } from '../controllers/requests/user-update-request.dto';
 import { UserUtilsService } from './user-utils.service';
+import { AuthUtilsService } from 'src/modules/auth/services/auth-utils.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private userRepository: UserRepository,
-    private utilsService: UserUtilsService,
+    private userUtilsService: UserUtilsService,
+    private authUtilsService: AuthUtilsService,
   ) {}
 
   async getUsers(): Promise<User[]> {
@@ -34,25 +33,15 @@ export class UserService {
     userId: string,
     userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
-    await this.utilsService.throwIfUserDoesNotAlreadyExist(userId);
+    await this.userUtilsService.throwIfUserDoesNotAlreadyExist(userId);
 
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(userUpdateRequest.password, salt);
+    const hashedPassword = await this.authUtilsService.getHashedPassword(
+      userUpdateRequest.password,
+    );
 
     await this.userRepository.updateUser(userId, {
       ...userUpdateRequest,
       password: hashedPassword,
     });
-  }
-
-  async login(userLoginRequest: UserLoginRequest): Promise<boolean> {
-    const { email, password } = userLoginRequest;
-    const user = await this.userRepository.getUserByEmail(email);
-
-    if (user === null) return false;
-
-    const hashedPassword = user.password;
-    const isPasswordMatching = await bcrypt.compare(password, hashedPassword);
-    return isPasswordMatching;
   }
 }
