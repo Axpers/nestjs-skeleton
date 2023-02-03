@@ -1,12 +1,6 @@
-import {
-  IsDefined,
-  IsEmail,
-  IsNotEmpty,
-  IsPhoneNumber,
-  IsString,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
 
-export class UserCreateUpdateRequest {
+export class UserUpdateRequest {
   @IsNotEmpty()
   @IsString()
   firstName: string;

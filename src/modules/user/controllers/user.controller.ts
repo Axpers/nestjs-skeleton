@@ -11,7 +11,7 @@ import {
 import { UserReponse } from './responses/user-response.dto';
 import { UserControllerReponseAdapter } from './user-controller-response.adapter';
 import { UserIdParam } from 'src/core/parameters/user-id-param.dto';
-import { UserCreateUpdateRequest } from './requests/user-create-update-request.dto';
+import { UserUpdateRequest } from './requests/user-update-request.dto';
 import { UserLoginRequest } from './requests/user-login-request.dto';
 
 @Controller('users')
@@ -43,7 +43,7 @@ export class UserController {
   @Put(':userId')
   async updateUser(
     @Param() userIdParam: UserIdParam,
-    @Body() userUpdateRequest: UserCreateUpdateRequest,
+    @Body() userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
     await this.userService.updateUser(userIdParam.userId, userUpdateRequest);
   }

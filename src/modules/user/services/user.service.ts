@@ -4,7 +4,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
-import { UserCreateUpdateRequest } from '../controllers/requests/user-create-update-request.dto';
+import { UserUpdateRequest } from '../controllers/requests/user-update-request.dto';
 import { UserUtilsService } from './user-utils.service';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class UserService {
 
   async updateUser(
     userId: string,
-    userUpdateRequest: UserCreateUpdateRequest,
+    userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
     await this.utilsService.throwIfUserDoesNotAlreadyExist(userId);
 

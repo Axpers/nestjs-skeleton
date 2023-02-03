@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UserCreateUpdateRequest } from 'src/modules/user/controllers/requests/user-create-update-request.dto';
 import { AuthUtilsService } from './auth-utils.service';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from 'src/modules/user/domain/user-repository';
+import { UserCreateRequest } from '../controllers/requests/user-create-request.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
     private userRepository: UserRepository,
   ) {}
 
-  async createUser(userCreateDto: UserCreateUpdateRequest): Promise<void> {
+  async createUser(userCreateDto: UserCreateRequest): Promise<void> {
     await this.utilsService.throwIfUserAlreadyExist(userCreateDto.email);
 
     const salt = await bcrypt.genSalt();

@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserCreateRequest } from 'src/modules/auth/controllers/requests/user-create-request.dto';
+import { UserUpdateRequest } from '../controllers/requests/user-update-request.dto';
 import { Repository } from 'typeorm';
-import { UserCreateUpdateRequest } from '../controllers/requests/user-create-update-request.dto';
 import { User } from '../domain/user';
 import { UserRepository } from '../domain/user-repository';
 import { UserEntity } from './entities/user.entity';
@@ -41,14 +42,14 @@ export class UserApiRepository implements UserRepository {
     await this.userRepository.delete(id);
   }
 
-  async createUser(userCreateRequest: UserCreateUpdateRequest): Promise<void> {
+  async createUser(userCreateRequest: UserCreateRequest): Promise<void> {
     const userEntity = this.userRepository.create({ ...userCreateRequest });
     await this.userRepository.save(userEntity);
   }
 
   async updateUser(
     userId: string,
-    userUpdateRequest: UserCreateUpdateRequest,
+    userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
     await this.userRepository.update(userId, userUpdateRequest);
   }

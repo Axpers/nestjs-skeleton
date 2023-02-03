@@ -1,4 +1,5 @@
-import { UserCreateUpdateRequest } from '../controllers/requests/user-create-update-request.dto';
+import { UserCreateRequest } from 'src/modules/auth/controllers/requests/user-create-request.dto';
+import { UserUpdateRequest } from '../controllers/requests/user-update-request.dto';
 import { User } from './user';
 
 export abstract class UserRepository {
@@ -10,12 +11,10 @@ export abstract class UserRepository {
 
   abstract deleteUser(id: string): Promise<void>;
 
-  abstract createUser(
-    userCreateRequest: UserCreateUpdateRequest,
-  ): Promise<void>;
+  abstract createUser(userCreateRequest: UserCreateRequest): Promise<void>;
 
   abstract updateUser(
     userId: string,
-    userUpdateRequest: UserCreateUpdateRequest,
+    userUpdateRequest: UserUpdateRequest,
   ): Promise<void>;
 }
