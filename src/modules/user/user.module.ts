@@ -20,5 +20,6 @@ import { UserUtilsService } from './services/user-utils.service';
     UserControllerReponseAdapter,
     { provide: UserRepository, useClass: UserApiRepository },
   ],
+  exports: [UserRepository],
 })
 export class UserModule {}

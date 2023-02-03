@@ -40,14 +40,7 @@ export class UserController {
     await this.userService.deleteUser(userIdParam.userId);
   }
 
-  @Post('register')
-  async createUser(
-    @Body() userCreateRequest: UserCreateUpdateRequest,
-  ): Promise<void> {
-    await this.userService.createUser(userCreateRequest);
-  }
-
-  @Put(':userId/update')
+  @Put(':userId')
   async updateUser(
     @Param() userIdParam: UserIdParam,
     @Body() userUpdateRequest: UserCreateUpdateRequest,
