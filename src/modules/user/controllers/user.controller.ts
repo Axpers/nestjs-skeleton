@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UserReponse } from './responses/user-response.dto';
 import { UserControllerReponseAdapter } from './user-controller-response.adapter';
-import { UserIdParam } from 'src/core/web-module/parameters/user-id-param.dto';
+import { UserIdParam } from 'src/core/parameters/user-id-param.dto';
 import { UserCreateUpdateRequest } from './requests/user-create-update-request.dto';
 import { UserLoginRequest } from './requests/user-login-request.dto';
 
