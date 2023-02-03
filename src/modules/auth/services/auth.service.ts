@@ -1,21 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { AuthUtilsService } from './auth-utils.service';
-import * as bcrypt from 'bcrypt';
 import { UserRepository } from 'src/modules/user/domain/user-repository';
 import { UserCreateRequest } from '../controllers/requests/user-create-request.dto';
 import { UserLoginRequest } from '../controllers/requests/user-login-request.dto';
+import { EncryptionService } from 'src/core/services/encryption.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private utilsService: AuthUtilsService,
     private userRepository: UserRepository,
+    private encryptionService: EncryptionService,
   ) {}
 
   async createUser(userCreateDto: UserCreateRequest): Promise<void> {
     await this.utilsService.throwIfUserAlreadyExist(userCreateDto.email);
 
-    const hashedPassword = await this.utilsService.getHashedPassword(
+    const hashedPassword = await this.encryptionService.getHashedPassword(
       userCreateDto.password,
     );
 
@@ -32,7 +33,12 @@ export class AuthService {
     if (user === null) return false;
 
     const hashedPassword = user.password;
-    const isPasswordMatching = await bcrypt.compare(password, hashedPassword);
-    return isPasswordMatching;
+    const arePasswordsMatching =
+      await this.encryptionService.arePasswordsMatching(
+        password,
+        hashedPassword,
+      );
+
+    return arePasswordsMatching;
   }
 }

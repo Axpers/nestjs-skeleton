@@ -3,14 +3,14 @@ import { UserRepository } from '../domain/user-repository';
 import { User } from '../domain/user';
 import { UserUpdateRequest } from '../controllers/requests/user-update-request.dto';
 import { UserUtilsService } from './user-utils.service';
-import { AuthUtilsService } from 'src/modules/auth/services/auth-utils.service';
+import { EncryptionService } from 'src/core/services/encryption.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private userRepository: UserRepository,
     private userUtilsService: UserUtilsService,
-    private authUtilsService: AuthUtilsService,
+    private encryptionService: EncryptionService,
   ) {}
 
   async getUsers(): Promise<User[]> {
@@ -35,7 +35,7 @@ export class UserService {
   ): Promise<void> {
     await this.userUtilsService.throwIfUserDoesNotAlreadyExist(userId);
 
-    const hashedPassword = await this.authUtilsService.getHashedPassword(
+    const hashedPassword = await this.encryptionService.getHashedPassword(
       userUpdateRequest.password,
     );
 
