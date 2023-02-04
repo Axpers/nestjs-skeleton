@@ -1,5 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
+import { User } from 'src/modules/user/domain/user';
 import { UserRepository } from 'src/modules/user/domain/user-repository';
+import { JwtPayload } from '../domain/jwt-payload';
 
 @Injectable()
 export class AuthUtilsService {
@@ -13,5 +15,12 @@ export class AuthUtilsService {
     if (isUsernameAlreadyTaken) {
       throw new ConflictException('Email already taken');
     }
+  }
+
+  getJwtPayload(user: User): JwtPayload {
+    return {
+      id: user.id,
+      email: user.email,
+    };
   }
 }

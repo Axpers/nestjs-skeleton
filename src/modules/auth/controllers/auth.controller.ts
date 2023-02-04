@@ -15,7 +15,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() userLoginRequest: UserLoginRequest): Promise<boolean> {
+  async login(@Body() userLoginRequest: UserLoginRequest): Promise<string> {
     return await this.authService.login(userLoginRequest);
   }
 }
