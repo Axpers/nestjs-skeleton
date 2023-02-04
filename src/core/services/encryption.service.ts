@@ -4,14 +4,14 @@ import { randomBytes, scryptSync, timingSafeEqual } from 'crypto';
 @Injectable()
 export class EncryptionService {
   private readonly keyLength = 64;
+  private readonly saltLength = 32;
   private readonly hashAndSaltSeparator = ':';
-
-  constructor() {}
+  private readonly bufferEncoding: BufferEncoding = 'hex';
 
   getHashedPassword(password: string): string {
-    const salt = randomBytes(16).toString('hex');
+    const salt = randomBytes(this.saltLength).toString(this.bufferEncoding);
     const hashedPassword = scryptSync(password, salt, this.keyLength).toString(
-      'hex',
+      this.bufferEncoding,
     );
     const saltedHash = `${salt}${this.hashAndSaltSeparator}${hashedPassword}`;
     return saltedHash;
@@ -22,7 +22,7 @@ export class EncryptionService {
       this.hashAndSaltSeparator,
     );
 
-    const hashedKeyBuffer = Buffer.from(storedKey, 'hex');
+    const hashedKeyBuffer = Buffer.from(storedKey, this.bufferEncoding);
     const derivedKey = scryptSync(rawPassword, storedSalt, this.keyLength);
 
     const arePasswordsMatching = timingSafeEqual(hashedKeyBuffer, derivedKey);
