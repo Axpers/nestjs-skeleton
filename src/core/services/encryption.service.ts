@@ -1,26 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import { randomBytes, scryptSync, timingSafeEqual } from 'crypto';
 
 @Injectable()
 export class EncryptionService {
+  private readonly keyLength = 64;
+  private readonly hashAndSaltSeparator = ':';
+
   constructor() {}
 
-  async getHashedPassword(password: string): Promise<string> {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    return hashedPassword;
+  getHashedPassword(password: string): string {
+    const salt = randomBytes(16).toString('hex');
+    const hashedPassword = scryptSync(password, salt, this.keyLength).toString(
+      'hex',
+    );
+    const saltedHash = `${salt}${this.hashAndSaltSeparator}${hashedPassword}`;
+    return saltedHash;
   }
 
-  async arePasswordsMatching(
-    rawPassword: string,
-    hashedPassword: string,
-  ): Promise<boolean> {
-    const isComparisonMatching = await bcrypt.compare(
-      rawPassword,
-      hashedPassword,
+  arePasswordsMatching(rawPassword: string, storedPassword: string): boolean {
+    const [storedSalt, storedKey] = storedPassword.split(
+      this.hashAndSaltSeparator,
     );
 
-    return isComparisonMatching;
+    const hashedKeyBuffer = Buffer.from(storedKey, 'hex');
+    const derivedKey = scryptSync(rawPassword, storedSalt, this.keyLength);
+
+    const arePasswordsMatching = timingSafeEqual(hashedKeyBuffer, derivedKey);
+    return arePasswordsMatching;
   }
 }
