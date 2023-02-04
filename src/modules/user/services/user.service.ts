@@ -35,7 +35,7 @@ export class UserService {
   ): Promise<void> {
     await this.userUtilsService.throwIfUserDoesNotAlreadyExist(userId);
 
-    const hashedPassword = await this.encryptionService.getHashedPassword(
+    const hashedPassword = this.encryptionService.getHashedPassword(
       userUpdateRequest.password,
     );
 

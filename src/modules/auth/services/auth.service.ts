@@ -16,7 +16,7 @@ export class AuthService {
   async createUser(userCreateDto: UserCreateRequest): Promise<void> {
     await this.utilsService.throwIfUserAlreadyExist(userCreateDto.email);
 
-    const hashedPassword = await this.encryptionService.getHashedPassword(
+    const hashedPassword = this.encryptionService.getHashedPassword(
       userCreateDto.password,
     );
 
@@ -33,11 +33,10 @@ export class AuthService {
     if (user === null) return false;
 
     const hashedPassword = user.password;
-    const arePasswordsMatching =
-      await this.encryptionService.arePasswordsMatching(
-        password,
-        hashedPassword,
-      );
+    const arePasswordsMatching = this.encryptionService.arePasswordsMatching(
+      password,
+      hashedPassword,
+    );
 
     return arePasswordsMatching;
   }
