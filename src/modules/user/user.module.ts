@@ -22,6 +22,6 @@ import { EncryptionService } from 'src/core/services/encryption.service';
     UserControllerReponseAdapter,
     { provide: UserRepository, useClass: UserApiRepository },
   ],
-  exports: [UserRepository],
+  exports: [UserRepository, UserControllerReponseAdapter],
 })
 export class UserModule {}
