@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { SkipAuth } from '../decorators/skip-auth.decorator';
 import { AuthService } from '../services/auth.service';
 import { UserCreateRequest } from './requests/user-create-request.dto';
 import { UserLoginRequest } from './requests/user-login-request.dto';
@@ -9,6 +10,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
+  @SkipAuth()
   async createUser(
     @Body() userCreateRequest: UserCreateRequest,
   ): Promise<void> {
@@ -16,6 +18,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @SkipAuth()
   async login(
     @Body() userLoginRequest: UserLoginRequest,
   ): Promise<AccessTokenResponse> {
