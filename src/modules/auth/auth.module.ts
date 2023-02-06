@@ -8,12 +8,12 @@ import { AuthController } from './controllers/auth.controller';
 import { JwtAuthGuard } from './guards/jwt-auth-guard';
 import { AuthUtilsService } from './services/auth-utils.service';
 import { AuthService } from './services/auth.service';
-import { JwtStrategy } from './services/jwt-strategy';
+import { JwtStrategy } from './strategies/jwt-strategy';
 
 @Module({
   imports: [
     UserModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({}),
     JwtModule.register({
       secret: 'defaultSecret',
       signOptions: {
