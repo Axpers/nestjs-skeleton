@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { SkipAuth } from '../decorators/skip-auth.decorator';
+import { SkipAuth } from '../../../core/decorators/skip-auth.decorator';
 import { AuthService } from '../services/auth.service';
 import { UserCreateRequest } from './requests/user-create-request.dto';
 import { UserLoginRequest } from './requests/user-login-request.dto';
