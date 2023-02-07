@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { UserModule } from '../modules/user/user.module';
@@ -13,18 +13,22 @@ import { RolesGuard } from './guards/roles.guard';
     UserModule,
     AuthModule,
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      type: 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: Number(process.env.DATABASE_PORT),
-      username: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      autoLoadEntities: true,
-      synchronize: true,
-      retryAttempts: 2,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configSerice: ConfigService) => {
+        return {
+          type: 'postgres',
+          host: configSerice.getOrThrow('DB_HOST'),
+          port: configSerice.getOrThrow('DB_PORT'),
+          username: configSerice.getOrThrow('DB_USERNAME'),
+          password: configSerice.getOrThrow('DB_PASSWORD'),
+          database: configSerice.getOrThrow('DB_DATABASE'),
+          autoLoadEntities: true,
+          synchronize: true,
+          retryAttempts: 2,
+        };
+      },
     }),
   ],
   controllers: [AppController],

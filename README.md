@@ -16,7 +16,7 @@ nest start --watch
 
 ### Create the database and the user
 ```docker
-docker run --name skeleton-db -e POSTGRES_USER=skeleton-db-user  -e POSTGRES_PASSWORD=skeleton-db-password -e POSTGRES_DB=skeleton-db-name -p 5432:5432 -d postgres
+docker run --name skeleton-db -e POSTGRES_USER=skeleton-db-username  -e POSTGRES_PASSWORD=skeleton-db-password -e POSTGRES_DB=skeleton-db-database -p 5432:5432 -d postgres
 ```
 
 ### Build api image
