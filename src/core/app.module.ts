@@ -12,11 +12,10 @@ import { RolesGuard } from './guards/roles.guard';
   imports: [
     UserModule,
     AuthModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configSerice: ConfigService) => {
+      useFactory: (configSerice: ConfigService) => {
         return {
           type: 'postgres',
           host: configSerice.getOrThrow('DB_HOST'),
