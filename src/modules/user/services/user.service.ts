@@ -8,9 +8,9 @@ import { EncryptionService } from 'src/core/services/encryption.service';
 @Injectable()
 export class UserService {
   constructor(
-    private userRepository: UserRepository,
-    private userUtilsService: UserUtilsService,
-    private encryptionService: EncryptionService,
+    private readonly userRepository: UserRepository,
+    private readonly userUtilsService: UserUtilsService,
+    private readonly encryptionService: EncryptionService,
   ) {}
 
   async getUsers(): Promise<User[]> {

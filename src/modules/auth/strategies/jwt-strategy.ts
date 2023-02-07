@@ -9,8 +9,8 @@ import { JwtPayload } from '../domain/jwt-payload';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private userRepository: UserRepository,
-    configService: ConfigService,
+    private readonly userRepository: UserRepository,
+    readonly configService: ConfigService,
   ) {
     super({
       secretOrKey: configService.getOrThrow('JWT_SECRET'),

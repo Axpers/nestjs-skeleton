@@ -3,7 +3,7 @@ import { UserRepository } from '../domain/user-repository';
 
 @Injectable()
 export class UserUtilsService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async throwIfUserDoesNotAlreadyExist(userId: string) {
     const potentialExistingUser = await this.userRepository.getUserById(userId);

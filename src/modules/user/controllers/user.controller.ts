@@ -8,8 +8,8 @@ import { UserUpdateRequest } from './requests/user-update-request.dto';
 @Controller('users')
 export class UserController {
   constructor(
-    private userService: UserService,
-    private userControllerReponseAdapter: UserControllerReponseAdapter,
+    private readonly userService: UserService,
+    private readonly userControllerReponseAdapter: UserControllerReponseAdapter,
   ) {}
 
   @Get()

@@ -12,8 +12,8 @@ import { UserEntityReponseAdapter } from './user-repository-reponse.adapter';
 export class UserApiRepository implements UserRepository {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-    private userEntityReponseAdapter: UserEntityReponseAdapter,
+    private readonly userRepository: Repository<UserEntity>,
+    private readonly userEntityReponseAdapter: UserEntityReponseAdapter,
   ) {}
 
   async getUsers(): Promise<User[]> {
