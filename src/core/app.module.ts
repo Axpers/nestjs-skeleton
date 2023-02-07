@@ -7,12 +7,13 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
+import { validate } from './schemas/env.validation';
 
 @Module({
   imports: [
     UserModule,
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, validate: validate }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configSerice: ConfigService) => {
