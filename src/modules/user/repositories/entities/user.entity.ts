@@ -5,11 +5,19 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { USER_ROLES, UserRole } from '../../domain/user';
 
 @Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({
+    type: 'enum',
+    enum: USER_ROLES,
+    default: 'regular',
+  })
+  role: UserRole;
 
   @Column()
   firstName: string;
@@ -34,6 +42,7 @@ export class UserEntity {
 
   constructor(
     id: string,
+    role: UserRole,
     firstName: string,
     lastName: string,
     email: string,
@@ -43,6 +52,7 @@ export class UserEntity {
     updatedAt: Date,
   ) {
     this.id = id;
+    this.role = role;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

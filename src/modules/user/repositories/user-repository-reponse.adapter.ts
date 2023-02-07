@@ -7,6 +7,7 @@ export class UserEntityReponseAdapter {
   adaptUser(user: UserEntity): User {
     return {
       id: user.id,
+      role: user.role,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
