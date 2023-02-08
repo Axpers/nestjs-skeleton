@@ -1,13 +1,15 @@
+import { ResourceEntity } from 'src/modules/resource/repositories/entities/resource.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { USER_ROLES, UserRole } from '../../domain/user';
 
-@Entity()
+@Entity({ name: 'User' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -18,6 +20,9 @@ export class UserEntity {
     default: 'regular',
   })
   role: UserRole;
+
+  @OneToMany(() => ResourceEntity, (resource) => resource.user, { eager: true })
+  resources: ResourceEntity[];
 
   @Column()
   firstName: string;
@@ -43,6 +48,7 @@ export class UserEntity {
   constructor(
     id: string,
     role: UserRole,
+    resources: ResourceEntity[],
     firstName: string,
     lastName: string,
     email: string,
@@ -53,6 +59,7 @@ export class UserEntity {
   ) {
     this.id = id;
     this.role = role;
+    this.resources = resources;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
