@@ -8,6 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { validate } from './schemas/env.validation';
+import { RightsGuard } from './guards/rights.guard';
 
 @Module({
   imports: [
@@ -40,6 +41,10 @@ import { validate } from './schemas/env.validation';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RightsGuard,
     },
   ],
 })
