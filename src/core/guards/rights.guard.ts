@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  BadRequestException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
@@ -9,9 +14,13 @@ export class RightsGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const requestParams = request.params;
 
-    console.log(requestParams);
+    const resourceId = requestParams.resourceId;
+    if (resourceId === undefined) {
+      throw new BadRequestException(
+        'resourceId should have been provided as request param',
+      );
+    }
 
-    // const resourceId = requestParams.resourceId;
     // const resource = FETCH RESOURCE VIA ID FROM REPOSITORY
     // if (resource === undefined) {
     //   throw new NotFoundException('Could not find the given resource');
