@@ -1,6 +1,9 @@
+import { Resource } from 'src/modules/resource/domain/resource';
+
 export interface User {
   id: string;
   role: UserRole;
+  resources: Resource[];
   firstName: string;
   lastName: string;
   email: string;
