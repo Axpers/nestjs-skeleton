@@ -10,9 +10,10 @@ import { UserEntityResponseAdapter } from './repositories/user-repository-respon
 import { UserControllerResponseAdapter } from './controllers/user-controller-response.adapter';
 import { UserUtilsService } from './services/user-utils.service';
 import { EncryptionService } from 'src/core/services/encryption.service';
+import { ResourceModule } from '../resource/resource.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [ResourceModule, TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [
     EncryptionService,
