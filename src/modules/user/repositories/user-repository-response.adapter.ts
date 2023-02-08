@@ -3,7 +3,7 @@ import { User } from '../domain/user';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
-export class UserEntityReponseAdapter {
+export class UserEntityResponseAdapter {
   adaptUser(user: UserEntity): User {
     return {
       id: user.id,

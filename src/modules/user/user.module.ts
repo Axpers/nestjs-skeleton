@@ -6,8 +6,8 @@ import { Module } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { UserEntity } from './repositories/entities/user.entity';
-import { UserEntityReponseAdapter } from './repositories/user-repository-reponse.adapter';
-import { UserControllerReponseAdapter } from './controllers/user-controller-response.adapter';
+import { UserEntityResponseAdapter } from './repositories/user-repository-response.adapter';
+import { UserControllerResponseAdapter } from './controllers/user-controller-response.adapter';
 import { UserUtilsService } from './services/user-utils.service';
 import { EncryptionService } from 'src/core/services/encryption.service';
 
@@ -18,8 +18,8 @@ import { EncryptionService } from 'src/core/services/encryption.service';
     EncryptionService,
     UserService,
     UserUtilsService,
-    UserEntityReponseAdapter,
-    UserControllerReponseAdapter,
+    UserEntityResponseAdapter,
+    UserControllerResponseAdapter,
     { provide: UserRepository, useClass: UserApiRepository },
   ],
   exports: [UserRepository],

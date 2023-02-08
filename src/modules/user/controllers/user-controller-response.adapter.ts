@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../domain/user';
-import { UserReponse } from './responses/user-response.dto';
+import { UserResponse } from './responses/user-response.dto';
 
 @Injectable()
-export class UserControllerReponseAdapter {
-  adaptUser(user: User): UserReponse {
+export class UserControllerResponseAdapter {
+  adaptUser(user: User): UserResponse {
     return {
       id: user.id,
       role: user.role,

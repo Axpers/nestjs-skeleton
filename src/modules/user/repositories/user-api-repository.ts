@@ -6,21 +6,21 @@ import { Repository } from 'typeorm';
 import { User } from '../domain/user';
 import { UserRepository } from '../domain/user-repository';
 import { UserEntity } from './entities/user.entity';
-import { UserEntityReponseAdapter } from './user-repository-reponse.adapter';
+import { UserEntityResponseAdapter } from './user-repository-response.adapter';
 
 @Injectable()
 export class UserApiRepository implements UserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private readonly userEntityReponseAdapter: UserEntityReponseAdapter,
+    private readonly userEntityResponseAdapter: UserEntityResponseAdapter,
   ) {}
 
   async getUsers(): Promise<User[]> {
     const userEntities = await this.userRepository.find();
 
     return userEntities.map((userEntity) =>
-      this.userEntityReponseAdapter.adaptUser(userEntity),
+      this.userEntityResponseAdapter.adaptUser(userEntity),
     );
   }
 
@@ -28,14 +28,14 @@ export class UserApiRepository implements UserRepository {
     const userEntity = await this.userRepository.findOneBy({ id });
 
     if (userEntity === null) return null;
-    return this.userEntityReponseAdapter.adaptUser(userEntity);
+    return this.userEntityResponseAdapter.adaptUser(userEntity);
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
     const userEntity = await this.userRepository.findOneBy({ email });
 
     if (userEntity === null) return null;
-    return this.userEntityReponseAdapter.adaptUser(userEntity);
+    return this.userEntityResponseAdapter.adaptUser(userEntity);
   }
 
   async deleteUser(id: string): Promise<void> {

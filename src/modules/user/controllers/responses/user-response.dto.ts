@@ -1,6 +1,6 @@
 import { UserRole } from '../../domain/user';
 
-export interface UserReponse {
+export interface UserResponse {
   id: string;
   role: UserRole;
   firstName: string;

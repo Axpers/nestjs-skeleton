@@ -1,7 +1,7 @@
 import { UserService } from '../services/user.service';
 import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
-import { UserReponse } from './responses/user-response.dto';
-import { UserControllerReponseAdapter } from './user-controller-response.adapter';
+import { UserResponse } from './responses/user-response.dto';
+import { UserControllerResponseAdapter } from './user-controller-response.adapter';
 import { UserIdParam } from 'src/core/parameters/user-id-param.dto';
 import { UserUpdateRequest } from './requests/user-update-request.dto';
 
@@ -9,21 +9,21 @@ import { UserUpdateRequest } from './requests/user-update-request.dto';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly userControllerReponseAdapter: UserControllerReponseAdapter,
+    private readonly userControllerResponseAdapter: UserControllerResponseAdapter,
   ) {}
 
   @Get()
-  async getUsers(): Promise<UserReponse[]> {
+  async getUsers(): Promise<UserResponse[]> {
     const users = await this.userService.getUsers();
     return users.map((user) =>
-      this.userControllerReponseAdapter.adaptUser(user),
+      this.userControllerResponseAdapter.adaptUser(user),
     );
   }
 
   @Get(':userId')
-  async getUser(@Param() userIdParam: UserIdParam): Promise<UserReponse> {
+  async getUser(@Param() userIdParam: UserIdParam): Promise<UserResponse> {
     const user = await this.userService.getUser(userIdParam.userId);
-    return this.userControllerReponseAdapter.adaptUser(user);
+    return this.userControllerResponseAdapter.adaptUser(user);
   }
 
   @Delete(':userId')
