@@ -3,14 +3,16 @@ import {
   CanActivate,
   ExecutionContext,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { ResourceRepository } from 'src/modules/resource/domain/resource-repository';
+import { User } from 'src/modules/user/domain/user';
 
 @Injectable()
 export class RightsGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private readonly resourceRepository: ResourceRepository) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const requestParams = request.params;
 
@@ -21,19 +23,18 @@ export class RightsGuard implements CanActivate {
       );
     }
 
-    // const resource = FETCH RESOURCE VIA ID FROM REPOSITORY
-    // if (resource === undefined) {
-    //   throw new NotFoundException('Could not find the given resource');
-    // }
+    const resource = await this.resourceRepository.getResourceById(resourceId);
+    if (resource === null) {
+      throw new NotFoundException('Could not find the given resource');
+    }
 
-    // const user = request.user as User;
-    // const isUserAdmin = user.role === 'admin';
-    // if (isUserAdmin) {
-    //   return true;
-    // }
+    const user = request.user as User;
+    const isUserAdmin = user.role === 'admin';
+    if (isUserAdmin) {
+      return true;
+    }
 
-    // Check if user has rights on it
-
-    return true;
+    const doesUserHaveRightsOnResource = resource.userId === resource.userId;
+    return doesUserHaveRightsOnResource;
   }
 }
