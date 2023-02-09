@@ -31,7 +31,14 @@ export class ResourceApiRepository implements ResourceRepository {
   }
 
   async getResourceById(id: string): Promise<Resource | null> {
-    const resourceEntity = await this.resourceRepository.findOneBy({ id });
+    const resourceEntity = await this.resourceRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        user: true,
+      },
+    });
 
     if (resourceEntity === null) return null;
     return this.resourceEntityResponseAdapter.adaptResource(resourceEntity);
