@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { GetUser } from 'src/core/decorators/get-user.decorator';
 import { Roles } from 'src/core/decorators/roles.decorator';
+import { RightsGuard } from 'src/core/guards/rights.guard';
 import { ResourceIdParam } from 'src/modules/resource/controllers/requests/parameters/resource-id-param.dto';
 import { User } from 'src/modules/user/domain/user';
 import { ResourceService } from '../services/resource/resource.service';
@@ -34,6 +36,7 @@ export class ResourceController {
   }
 
   @Get(':resourceId')
+  @UseGuards(RightsGuard)
   async getResource(
     @Param() resourceIdParam: ResourceIdParam,
   ): Promise<ResourceResponse> {
