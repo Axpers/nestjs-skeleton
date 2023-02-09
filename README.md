@@ -8,7 +8,7 @@ pnpm install
 
 ## Run : 
 ```
-nest start --watch
+pnpm run start:dev
 ```
 
 
