@@ -2,7 +2,7 @@ import { UserService } from '../services/user.service';
 import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { UserResponse } from './responses/user-response.dto';
 import { UserControllerResponseAdapter } from './user-controller-response.adapter';
-import { UserIdParam } from 'src/core/parameters/user-id-param.dto';
+import { UserIdParam } from 'src/modules/user/controllers/requests/parameters/user-id-param.dto';
 import { UserUpdateRequest } from './requests/user-update-request.dto';
 
 @Controller('users')
