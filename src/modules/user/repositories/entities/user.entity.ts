@@ -21,7 +21,7 @@ export class UserEntity {
   })
   role: UserRole;
 
-  @OneToMany(() => ResourceEntity, (resource) => resource.user, { eager: true })
+  @OneToMany(() => ResourceEntity, (resource) => resource.user)
   resources: ResourceEntity[];
 
   @Column()

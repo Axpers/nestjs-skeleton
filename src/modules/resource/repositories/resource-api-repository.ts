@@ -23,7 +23,11 @@ export class ResourceApiRepository implements ResourceRepository {
   ) {}
 
   async getResources(): Promise<Resource[]> {
-    const resourceEntities = await this.resourceRepository.find();
+    const resourceEntities = await this.resourceRepository.find({
+      relations: {
+        user: true,
+      },
+    });
 
     return resourceEntities.map((resourceEntity) =>
       this.resourceEntityResponseAdapter.adaptResource(resourceEntity),

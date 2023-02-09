@@ -17,7 +17,13 @@ export class UserApiRepository implements UserRepository {
   ) {}
 
   async getUsers(): Promise<User[]> {
-    const userEntities = await this.userRepository.find();
+    const userEntities = await this.userRepository.find({
+      relations: {
+        resources: {
+          user: true,
+        },
+      },
+    });
 
     return userEntities.map((userEntity) =>
       this.userEntityResponseAdapter.adaptUser(userEntity),
@@ -25,14 +31,32 @@ export class UserApiRepository implements UserRepository {
   }
 
   async getUserById(id: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOneBy({ id });
+    const userEntity = await this.userRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        resources: {
+          user: true,
+        },
+      },
+    });
 
     if (userEntity === null) return null;
     return this.userEntityResponseAdapter.adaptUser(userEntity);
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOneBy({ email });
+    const userEntity = await this.userRepository.findOne({
+      where: {
+        email,
+      },
+      relations: {
+        resources: {
+          user: true,
+        },
+      },
+    });
 
     if (userEntity === null) return null;
     return this.userEntityResponseAdapter.adaptUser(userEntity);
