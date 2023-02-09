@@ -16,14 +16,14 @@ import { validate } from './schemas/env.validation';
     ConfigModule.forRoot({ isGlobal: true, validate: validate }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configSerice: ConfigService) => {
+      useFactory: (configService: ConfigService) => {
         return {
           type: 'postgres',
-          host: configSerice.getOrThrow('DB_HOST'),
-          port: configSerice.getOrThrow('DB_PORT'),
-          username: configSerice.getOrThrow('DB_USERNAME'),
-          password: configSerice.getOrThrow('DB_PASSWORD'),
-          database: configSerice.getOrThrow('DB_DATABASE'),
+          host: configService.getOrThrow('DB_HOST'),
+          port: configService.getOrThrow('DB_PORT'),
+          username: configService.getOrThrow('DB_USERNAME'),
+          password: configService.getOrThrow('DB_PASSWORD'),
+          database: configService.getOrThrow('DB_DATABASE'),
           autoLoadEntities: true,
           synchronize: true,
           retryAttempts: 2,
