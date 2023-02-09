@@ -8,6 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { GetUser } from 'src/core/decorators/get-user.decorator';
+import { Roles } from 'src/core/decorators/roles.decorator';
 import { ResourceIdParam } from 'src/modules/resource/controllers/requests/parameters/resource-id-param.dto';
 import { User } from 'src/modules/user/domain/user';
 import { ResourceService } from '../services/resource/resource.service';
@@ -49,8 +50,7 @@ export class ResourceController {
   }
 
   @Post()
-  // RolesGuard
-  // RightsGuard
+  @Roles('regular')
   async createResource(
     @GetUser() user: User,
     @Body() resourceCreateRequest: ResourceCreateRequest,
