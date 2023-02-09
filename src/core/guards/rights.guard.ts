@@ -34,7 +34,7 @@ export class RightsGuard implements CanActivate {
       return true;
     }
 
-    const doesUserHaveRightsOnResource = resource.userId === resource.userId;
+    const doesUserHaveRightsOnResource = user.id === resource.userId;
     return doesUserHaveRightsOnResource;
   }
 }
