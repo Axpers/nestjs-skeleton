@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/modules/user/domain/user';
+import { UserEntity } from 'src/modules/user/repositories/entities/user.entity';
 import { Repository } from 'typeorm';
 import { ResourceCreateRequest } from '../controllers/requests/resource-create-request.dto';
 import { ResourceUpdateRequest } from '../controllers/requests/resource-update-request.dto';
@@ -13,6 +15,10 @@ export class ResourceApiRepository implements ResourceRepository {
   constructor(
     @InjectRepository(ResourceEntity)
     private readonly resourceRepository: Repository<ResourceEntity>,
+
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+
     private readonly resourceEntityResponseAdapter: ResourceEntityResponseAdapter,
   ) {}
 
@@ -36,10 +42,21 @@ export class ResourceApiRepository implements ResourceRepository {
   }
 
   async createResource(
+    user: User,
     resourceCreateRequest: ResourceCreateRequest,
   ): Promise<void> {
+    const userEntity = await this.userRepository.findOneBy({ id: user.id });
+
+    if (userEntity === null) {
+      // This case should never happen
+      throw new InternalServerErrorException(
+        'Authenticated and fetched user do not match',
+      );
+    }
+
     const resourceEntity = this.resourceRepository.create({
       ...resourceCreateRequest,
+      user: userEntity,
     });
     await this.resourceRepository.save(resourceEntity);
   }

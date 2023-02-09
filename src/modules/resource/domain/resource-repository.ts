@@ -1,3 +1,4 @@
+import { User } from 'src/modules/user/domain/user';
 import { ResourceCreateRequest } from '../controllers/requests/resource-create-request.dto';
 import { ResourceUpdateRequest } from '../controllers/requests/resource-update-request.dto';
 import { Resource } from './resource';
@@ -10,6 +11,7 @@ export abstract class ResourceRepository {
   abstract deleteResource(id: string): Promise<void>;
 
   abstract createResource(
+    user: User,
     resourceCreateRequest: ResourceCreateRequest,
   ): Promise<void>;
 

@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { User } from 'src/modules/user/domain/user';
 import { ResourceCreateRequest } from '../../controllers/requests/resource-create-request.dto';
 import { ResourceUpdateRequest } from '../../controllers/requests/resource-update-request.dto';
 import { Resource } from '../../domain/resource';
@@ -30,9 +31,10 @@ export class ResourceService {
   }
 
   async createResource(
+    user: User,
     resourceCreateRequest: ResourceCreateRequest,
   ): Promise<void> {
-    await this.resourceRepository.createResource(resourceCreateRequest);
+    await this.resourceRepository.createResource(user, resourceCreateRequest);
   }
 
   async updateResource(

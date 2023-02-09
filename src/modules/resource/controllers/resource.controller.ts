@@ -7,14 +7,16 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { GetUser } from 'src/core/decorators/get-user.decorator';
 import { ResourceIdParam } from 'src/modules/resource/controllers/requests/parameters/resource-id-param.dto';
+import { User } from 'src/modules/user/domain/user';
 import { ResourceService } from '../services/resource/resource.service';
 import { ResourceCreateRequest } from './requests/resource-create-request.dto';
 import { ResourceUpdateRequest } from './requests/resource-update-request.dto';
 import { ResourceControllerResponseAdapter } from './resource-controller-response.adapter';
 import { ResourceResponse } from './responses/resource-response.dto';
 
-@Controller('resource')
+@Controller('resources')
 export class ResourceController {
   constructor(
     private readonly resourceService: ResourceService,
@@ -47,10 +49,13 @@ export class ResourceController {
   }
 
   @Post()
+  // RolesGuard
+  // RightsGuard
   async createResource(
+    @GetUser() user: User,
     @Body() resourceCreateRequest: ResourceCreateRequest,
   ): Promise<void> {
-    await this.resourceService.createResource(resourceCreateRequest);
+    await this.resourceService.createResource(user, resourceCreateRequest);
   }
 
   @Put(':resourceId')
