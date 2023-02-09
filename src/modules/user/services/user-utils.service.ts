@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../domain/user-repository';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class UserUtilsService {
     const potentialExistingUser = await this.userRepository.getUserById(userId);
     const isIdAlreadyTaken = potentialExistingUser?.id === userId;
     if (!isIdAlreadyTaken) {
-      throw new BadRequestException(
+      throw new NotFoundException(
         'There is no registered account under that id',
       );
     }
