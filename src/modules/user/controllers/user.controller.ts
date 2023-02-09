@@ -4,6 +4,7 @@ import { UserResponse } from './responses/user-response.dto';
 import { UserControllerResponseAdapter } from './user-controller-response.adapter';
 import { UserIdParam } from 'src/modules/user/controllers/requests/parameters/user-id-param.dto';
 import { UserUpdateRequest } from './requests/user-update-request.dto';
+import { Roles } from 'src/core/decorators/roles.decorator';
 
 @Controller('users')
 export class UserController {
@@ -13,6 +14,7 @@ export class UserController {
   ) {}
 
   @Get()
+  @Roles('admin')
   async getUsers(): Promise<UserResponse[]> {
     const users = await this.userService.getUsers();
     return users.map((user) =>

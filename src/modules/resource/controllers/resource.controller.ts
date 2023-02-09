@@ -25,6 +25,7 @@ export class ResourceController {
   ) {}
 
   @Get()
+  @Roles('admin')
   async getResources(): Promise<ResourceResponse[]> {
     const resources = await this.resourceService.getResources();
     return resources.map((resource) =>
