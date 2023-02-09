@@ -28,7 +28,7 @@ export class RightsGuard implements CanActivate {
       throw new NotFoundException('Could not find the given resource');
     }
 
-    const user = request.user as User;
+    const user: User = request.user;
     const isUserAdmin = user.role === 'admin';
     if (isUserAdmin) {
       return true;
