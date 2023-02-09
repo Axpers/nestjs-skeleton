@@ -1,5 +1,5 @@
 export interface ResourceResponse {
   id: string;
   description: string;
-  userId: string;
+  userId: string | undefined;
 }

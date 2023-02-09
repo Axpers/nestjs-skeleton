@@ -11,7 +11,7 @@ export class UserControllerResponseAdapter {
 
   adaptUser(user: User): UserResponse {
     const resources = user.resources.map((resource) =>
-      this.resourceControllerResponseAdapter.adaptResource(resource),
+      this.resourceControllerResponseAdapter.adaptResource(resource, true),
     );
 
     return {

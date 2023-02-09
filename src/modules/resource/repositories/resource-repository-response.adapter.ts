@@ -8,7 +8,7 @@ export class ResourceEntityResponseAdapter {
     return {
       id: resource.id,
       description: resource.description,
-      userId: resource.user?.id,
+      userId: resource.user.id,
     };
   }
 }
