@@ -7,6 +7,7 @@ import { ResourceRepository } from './domain/resource-repository';
 import { ResourceEntity } from './repositories/entities/resource.entity';
 import { ResourceApiRepository } from './repositories/resource-api-repository';
 import { ResourceEntityResponseAdapter } from './repositories/resource-repository-response.adapter';
+import { ResourceUtilsService } from './services/resource/resource-utils.service';
 import { ResourceService } from './services/resource/resource.service';
 
 @Module({
@@ -14,6 +15,7 @@ import { ResourceService } from './services/resource/resource.service';
   controllers: [ResourceController],
   providers: [
     ResourceService,
+    ResourceUtilsService,
     ResourceEntityResponseAdapter,
     ResourceControllerResponseAdapter,
     { provide: ResourceRepository, useClass: ResourceApiRepository },
