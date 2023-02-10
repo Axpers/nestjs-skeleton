@@ -48,6 +48,7 @@ export class ResourceController {
   }
 
   @Delete(`:${RouteParameters.ResourceId}`)
+  @UseGuards(RightsGuard('resourceId'))
   async deleteResource(
     @Param() resourceIdParam: ResourceIdParam,
   ): Promise<void> {
@@ -55,7 +56,6 @@ export class ResourceController {
   }
 
   @Post()
-  @Roles('regular')
   async createResource(
     @GetUser() user: User,
     @Body() resourceCreateRequest: ResourceCreateRequest,
@@ -64,6 +64,7 @@ export class ResourceController {
   }
 
   @Put(`:${RouteParameters.ResourceId}`)
+  @UseGuards(RightsGuard('resourceId'))
   async updateResource(
     @Param() resourceIdParam: ResourceIdParam,
     @Body() resourceUpdateRequest: ResourceUpdateRequest,
