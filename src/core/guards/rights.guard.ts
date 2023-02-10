@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ResourceRepository } from 'src/modules/resource/domain/resource-repository';
 import { User } from 'src/modules/user/domain/user';
-import { RouteParametersType } from '../parameters/routes-parameters';
+import { RouteParametersType } from '../parameters/route-parameters';
 
 export const RightsGuard = (
   ...targetParameters: RouteParametersType[]

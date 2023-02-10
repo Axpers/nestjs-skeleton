@@ -14,7 +14,7 @@ import { UserIdParam } from 'src/modules/user/controllers/requests/parameters/us
 import { UserUpdateRequest } from './requests/user-update-request.dto';
 import { Roles } from 'src/core/decorators/roles.decorator';
 import { RightsGuard } from 'src/core/guards/rights.guard';
-import { RouteParameters } from 'src/core/parameters/routes-parameters';
+import { RouteParameters } from 'src/core/parameters/route-parameters';
 
 @Controller('users')
 export class UserController {
