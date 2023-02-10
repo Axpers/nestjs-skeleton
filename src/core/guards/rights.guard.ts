@@ -9,7 +9,10 @@ import {
 } from '@nestjs/common';
 import { ResourceRepository } from 'src/modules/resource/domain/resource-repository';
 import { User } from 'src/modules/user/domain/user';
-import { RouteParametersType } from '../parameters/route-parameters';
+import {
+  RouteParameters,
+  RouteParametersType,
+} from '../parameters/route-parameters';
 
 export const RightsGuard = (
   ...targetParameters: RouteParametersType[]
@@ -29,13 +32,15 @@ export const RightsGuard = (
       }
 
       const isUserTargeted = targetParameters.includes('userId');
-      const targetUserId: string | undefined = requestParameters.userId;
+      const targetUserId: string | undefined =
+        requestParameters[RouteParameters.UserId];
       const hasRightsOnUser = isUserTargeted
         ? this.hasRightsOnUser(requesterUser, targetUserId)
         : true;
 
       const isResourceTargeted = targetParameters.includes('resourceId');
-      const targetResourceId: string | undefined = requestParameters.resourceId;
+      const targetResourceId: string | undefined =
+        requestParameters[RouteParameters.ResourceId];
       const hasRightsOnResource = isResourceTargeted
         ? this.hasRightsOnResource(requesterUser, targetResourceId)
         : true;
