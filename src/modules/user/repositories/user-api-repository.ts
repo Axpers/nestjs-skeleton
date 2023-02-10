@@ -6,14 +6,14 @@ import { Repository } from 'typeorm';
 import { User } from '../domain/user';
 import { UserRepository } from '../domain/user-repository';
 import { UserEntity } from './entities/user.entity';
-import { UserEntityResponseAdapter } from './user-repository-response.adapter';
+import { UserEntityAdapter } from './user-entity.adapter';
 
 @Injectable()
 export class UserApiRepository implements UserRepository {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private readonly userEntityResponseAdapter: UserEntityResponseAdapter,
+    private readonly userEntityAdapter: UserEntityAdapter,
   ) {}
 
   async getUsers(): Promise<User[]> {
@@ -26,7 +26,7 @@ export class UserApiRepository implements UserRepository {
     });
 
     return userEntities.map((userEntity) =>
-      this.userEntityResponseAdapter.adaptUser(userEntity),
+      this.userEntityAdapter.adaptUser(userEntity),
     );
   }
 
@@ -43,7 +43,7 @@ export class UserApiRepository implements UserRepository {
     });
 
     if (userEntity === null) return null;
-    return this.userEntityResponseAdapter.adaptUser(userEntity);
+    return this.userEntityAdapter.adaptUser(userEntity);
   }
 
   async getUserByEmail(email: string): Promise<User | null> {
@@ -59,7 +59,7 @@ export class UserApiRepository implements UserRepository {
     });
 
     if (userEntity === null) return null;
-    return this.userEntityResponseAdapter.adaptUser(userEntity);
+    return this.userEntityAdapter.adaptUser(userEntity);
   }
 
   async deleteUser(id: string): Promise<void> {

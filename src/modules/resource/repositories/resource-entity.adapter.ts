@@ -3,7 +3,7 @@ import { Resource } from '../domain/resource';
 import { ResourceEntity } from './entities/resource.entity';
 
 @Injectable()
-export class ResourceEntityResponseAdapter {
+export class ResourceEntityAdapter {
   adaptResource(resource: ResourceEntity): Resource {
     return {
       id: resource.id,

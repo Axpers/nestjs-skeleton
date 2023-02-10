@@ -8,7 +8,7 @@ import { ResourceUpdateRequest } from '../controllers/requests/resource-update-r
 import { Resource } from '../domain/resource';
 import { ResourceRepository } from '../domain/resource-repository';
 import { ResourceEntity } from './entities/resource.entity';
-import { ResourceEntityResponseAdapter } from './resource-repository-response.adapter';
+import { ResourceEntityAdapter } from './resource-entity.adapter';
 
 @Injectable()
 export class ResourceApiRepository implements ResourceRepository {
@@ -19,7 +19,7 @@ export class ResourceApiRepository implements ResourceRepository {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
 
-    private readonly resourceEntityResponseAdapter: ResourceEntityResponseAdapter,
+    private readonly resourceEntityAdapter: ResourceEntityAdapter,
   ) {}
 
   async getResources(): Promise<Resource[]> {
@@ -30,7 +30,7 @@ export class ResourceApiRepository implements ResourceRepository {
     });
 
     return resourceEntities.map((resourceEntity) =>
-      this.resourceEntityResponseAdapter.adaptResource(resourceEntity),
+      this.resourceEntityAdapter.adaptResource(resourceEntity),
     );
   }
 
@@ -45,7 +45,7 @@ export class ResourceApiRepository implements ResourceRepository {
     });
 
     if (resourceEntity === null) return null;
-    return this.resourceEntityResponseAdapter.adaptResource(resourceEntity);
+    return this.resourceEntityAdapter.adaptResource(resourceEntity);
   }
 
   async deleteResource(id: string): Promise<void> {

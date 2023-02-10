@@ -1,17 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { ResourceEntityResponseAdapter } from 'src/modules/resource/repositories/resource-repository-response.adapter';
+import { ResourceEntityAdapter } from 'src/modules/resource/repositories/resource-entity.adapter';
 import { User } from '../domain/user';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
-export class UserEntityResponseAdapter {
-  constructor(
-    private readonly resourceEntityResponseAdapter: ResourceEntityResponseAdapter,
-  ) {}
+export class UserEntityAdapter {
+  constructor(private readonly resourceEntityAdapter: ResourceEntityAdapter) {}
 
   adaptUser(user: UserEntity): User {
     const resources = user.resources.map((resourceEntity) =>
-      this.resourceEntityResponseAdapter.adaptResource(resourceEntity),
+      this.resourceEntityAdapter.adaptResource(resourceEntity),
     );
 
     return {

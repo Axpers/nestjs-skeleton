@@ -6,7 +6,7 @@ import { ResourceController } from './controllers/resource.controller';
 import { ResourceRepository } from './domain/resource-repository';
 import { ResourceEntity } from './repositories/entities/resource.entity';
 import { ResourceApiRepository } from './repositories/resource-api-repository';
-import { ResourceEntityResponseAdapter } from './repositories/resource-repository-response.adapter';
+import { ResourceEntityAdapter } from './repositories/resource-entity.adapter';
 import { ResourceUtilsService } from './services/resource/resource-utils.service';
 import { ResourceService } from './services/resource/resource.service';
 
@@ -16,14 +16,10 @@ import { ResourceService } from './services/resource/resource.service';
   providers: [
     ResourceService,
     ResourceUtilsService,
-    ResourceEntityResponseAdapter,
+    ResourceEntityAdapter,
     ResourceResponseAdapter,
     { provide: ResourceRepository, useClass: ResourceApiRepository },
   ],
-  exports: [
-    ResourceRepository,
-    ResourceEntityResponseAdapter,
-    ResourceResponseAdapter,
-  ],
+  exports: [ResourceRepository, ResourceEntityAdapter, ResourceResponseAdapter],
 })
 export class ResourceModule {}
