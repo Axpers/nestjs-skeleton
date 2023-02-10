@@ -19,8 +19,6 @@ export const RightsGuard = (
     constructor(private readonly resourceRepository: ResourceRepository) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-      console.log(targetParameters);
-
       const request = context.switchToHttp().getRequest();
       const requestParameters = request.params;
       const requesterUser: User = request.user;

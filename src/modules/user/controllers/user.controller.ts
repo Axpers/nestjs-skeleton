@@ -38,11 +38,13 @@ export class UserController {
   }
 
   @Delete(`:${RouteParameters.UserId}`)
+  @UseGuards(RightsGuard('userId'))
   async deleteUser(@Param() userIdParam: UserIdParam): Promise<void> {
     await this.userService.deleteUser(userIdParam.userId);
   }
 
   @Put(`:${RouteParameters.UserId}`)
+  @UseGuards(RightsGuard('userId'))
   async updateUser(
     @Param() userIdParam: UserIdParam,
     @Body() userUpdateRequest: UserUpdateRequest,
