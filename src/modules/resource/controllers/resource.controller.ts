@@ -16,7 +16,7 @@ import { User } from 'src/modules/user/domain/user';
 import { ResourceService } from '../services/resource/resource.service';
 import { ResourceCreateRequest } from './requests/resource-create-request.dto';
 import { ResourceUpdateRequest } from './requests/resource-update-request.dto';
-import { ResourceResponseAdapter } from './resource-response.adapter';
+import { ResourceResponseAdapter } from './responses/resource-response.adapter';
 import { ResourceResponse } from './responses/resource-response.dto';
 
 @Controller('resources')

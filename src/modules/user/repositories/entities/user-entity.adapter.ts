@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ResourceEntityAdapter } from 'src/modules/resource/repositories/resource-entity.adapter';
-import { User } from '../domain/user';
-import { UserEntity } from './entities/user.entity';
+import { ResourceEntityAdapter } from 'src/modules/resource/repositories/entities/resource-entity.adapter';
+import { User } from '../../domain/user';
+import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserEntityAdapter {

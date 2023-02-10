@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Resource } from '../domain/resource';
-import { ResourceResponse } from './responses/resource-response.dto';
+import { Resource } from '../../domain/resource';
+import { ResourceResponse } from './resource-response.dto';
 
 @Injectable()
 export class ResourceResponseAdapter {

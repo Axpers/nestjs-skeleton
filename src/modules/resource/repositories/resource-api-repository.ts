@@ -8,7 +8,7 @@ import { ResourceUpdateRequest } from '../controllers/requests/resource-update-r
 import { Resource } from '../domain/resource';
 import { ResourceRepository } from '../domain/resource-repository';
 import { ResourceEntity } from './entities/resource.entity';
-import { ResourceEntityAdapter } from './resource-entity.adapter';
+import { ResourceEntityAdapter } from './entities/resource-entity.adapter';
 
 @Injectable()
 export class ResourceApiRepository implements ResourceRepository {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ResourceResponseAdapter } from 'src/modules/resource/controllers/resource-response.adapter';
-import { User } from '../domain/user';
-import { UserResponse } from './responses/user-response.dto';
+import { ResourceResponseAdapter } from 'src/modules/resource/controllers/responses/resource-response.adapter';
+import { User } from '../../domain/user';
+import { UserResponse } from './user-response.dto';
 
 @Injectable()
 export class UserResponseAdapter {

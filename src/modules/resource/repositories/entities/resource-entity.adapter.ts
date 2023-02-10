@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Resource } from '../domain/resource';
-import { ResourceEntity } from './entities/resource.entity';
+import { Resource } from '../../domain/resource';
+import { ResourceEntity } from './resource.entity';
 
 @Injectable()
 export class ResourceEntityAdapter {

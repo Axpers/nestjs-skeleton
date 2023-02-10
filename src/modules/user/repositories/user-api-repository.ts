@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { User } from '../domain/user';
 import { UserRepository } from '../domain/user-repository';
 import { UserEntity } from './entities/user.entity';
-import { UserEntityAdapter } from './user-entity.adapter';
+import { UserEntityAdapter } from './entities/user-entity.adapter';
 
 @Injectable()
 export class UserApiRepository implements UserRepository {

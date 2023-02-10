@@ -1,7 +1,7 @@
 import { UserService } from '../services/user.service';
 import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { UserResponse } from './responses/user-response.dto';
-import { UserResponseAdapter } from './user-response.adapter';
+import { UserResponseAdapter } from './responses/user-response.adapter';
 import { UserIdParam } from 'src/modules/user/controllers/requests/parameters/user-id-param.dto';
 import { UserUpdateRequest } from './requests/user-update-request.dto';
 import { Roles } from 'src/core/decorators/roles.decorator';
