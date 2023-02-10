@@ -1,10 +1,20 @@
 import { UserService } from '../services/user.service';
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { UserResponse } from './responses/user-response.dto';
 import { UserResponseAdapter } from './responses/user-response.adapter';
 import { UserIdParam } from 'src/modules/user/controllers/requests/parameters/user-id-param.dto';
 import { UserUpdateRequest } from './requests/user-update-request.dto';
 import { Roles } from 'src/core/decorators/roles.decorator';
+import { RightsGuard } from 'src/core/guards/rights.guard';
+import { RouteParameters } from 'src/core/parameters/routes-parameters';
 
 @Controller('users')
 export class UserController {
@@ -20,18 +30,19 @@ export class UserController {
     return users.map((user) => this.userResponseAdapter.adaptUser(user));
   }
 
-  @Get(':userId')
+  @Get(`:${RouteParameters.UserId}`)
+  @UseGuards(RightsGuard('userId'))
   async getUser(@Param() userIdParam: UserIdParam): Promise<UserResponse> {
     const user = await this.userService.getUser(userIdParam.userId);
     return this.userResponseAdapter.adaptUser(user);
   }
 
-  @Delete(':userId')
+  @Delete(`:${RouteParameters.UserId}`)
   async deleteUser(@Param() userIdParam: UserIdParam): Promise<void> {
     await this.userService.deleteUser(userIdParam.userId);
   }
 
-  @Put(':userId')
+  @Put(`:${RouteParameters.UserId}`)
   async updateUser(
     @Param() userIdParam: UserIdParam,
     @Body() userUpdateRequest: UserUpdateRequest,
