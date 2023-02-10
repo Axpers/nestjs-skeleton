@@ -11,6 +11,7 @@ import {
 import { GetUser } from 'src/core/decorators/get-user.decorator';
 import { Roles } from 'src/core/decorators/roles.decorator';
 import { RightsGuard } from 'src/core/guards/rights.guard';
+import { RouteParameters } from 'src/core/parameters/routes-parameters';
 import { ResourceIdParam } from 'src/modules/resource/controllers/requests/parameters/resource-id-param.dto';
 import { User } from 'src/modules/user/domain/user';
 import { ResourceService } from '../services/resource/resource.service';
@@ -35,8 +36,8 @@ export class ResourceController {
     );
   }
 
-  @Get(':resourceId')
-  @UseGuards(RightsGuard)
+  @Get(`:${RouteParameters.ResourceId}`)
+  @UseGuards(RightsGuard('resourceId'))
   async getResource(
     @Param() resourceIdParam: ResourceIdParam,
   ): Promise<ResourceResponse> {
@@ -46,7 +47,7 @@ export class ResourceController {
     return this.resourceResponseAdapter.adaptResource(resource);
   }
 
-  @Delete(':resourceId')
+  @Delete(`:${RouteParameters.ResourceId}`)
   async deleteResource(
     @Param() resourceIdParam: ResourceIdParam,
   ): Promise<void> {
@@ -62,7 +63,7 @@ export class ResourceController {
     await this.resourceService.createResource(user, resourceCreateRequest);
   }
 
-  @Put(':resourceId')
+  @Put(`:${RouteParameters.ResourceId}`)
   async updateResource(
     @Param() resourceIdParam: ResourceIdParam,
     @Body() resourceUpdateRequest: ResourceUpdateRequest,
