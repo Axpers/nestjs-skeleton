@@ -7,7 +7,7 @@ import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { UserEntity } from './repositories/entities/user.entity';
 import { UserEntityResponseAdapter } from './repositories/user-repository-response.adapter';
-import { UserControllerResponseAdapter } from './controllers/user-controller-response.adapter';
+import { UserResponseAdapter } from './controllers/user-response.adapter';
 import { UserUtilsService } from './services/user-utils.service';
 import { EncryptionService } from 'src/core/services/encryption.service';
 import { ResourceModule } from '../resource/resource.module';
@@ -20,7 +20,7 @@ import { ResourceModule } from '../resource/resource.module';
     UserService,
     UserUtilsService,
     UserEntityResponseAdapter,
-    UserControllerResponseAdapter,
+    UserResponseAdapter,
     { provide: UserRepository, useClass: UserApiRepository },
   ],
   exports: [UserRepository],

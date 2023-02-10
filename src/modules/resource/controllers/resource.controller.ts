@@ -16,14 +16,14 @@ import { User } from 'src/modules/user/domain/user';
 import { ResourceService } from '../services/resource/resource.service';
 import { ResourceCreateRequest } from './requests/resource-create-request.dto';
 import { ResourceUpdateRequest } from './requests/resource-update-request.dto';
-import { ResourceControllerResponseAdapter } from './resource-controller-response.adapter';
+import { ResourceResponseAdapter } from './resource-response.adapter';
 import { ResourceResponse } from './responses/resource-response.dto';
 
 @Controller('resources')
 export class ResourceController {
   constructor(
     private readonly resourceService: ResourceService,
-    private readonly resourceControllerResponseAdapter: ResourceControllerResponseAdapter,
+    private readonly ResourceResponseAdapter: ResourceResponseAdapter,
   ) {}
 
   @Get()
@@ -31,7 +31,7 @@ export class ResourceController {
   async getResources(): Promise<ResourceResponse[]> {
     const resources = await this.resourceService.getResources();
     return resources.map((resource) =>
-      this.resourceControllerResponseAdapter.adaptResource(resource),
+      this.ResourceResponseAdapter.adaptResource(resource),
     );
   }
 
@@ -43,7 +43,7 @@ export class ResourceController {
     const resource = await this.resourceService.getResource(
       resourceIdParam.resourceId,
     );
-    return this.resourceControllerResponseAdapter.adaptResource(resource);
+    return this.ResourceResponseAdapter.adaptResource(resource);
   }
 
   @Delete(':resourceId')

@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { ResourceControllerResponseAdapter } from 'src/modules/resource/controllers/resource-controller-response.adapter';
+import { ResourceResponseAdapter } from 'src/modules/resource/controllers/resource-response.adapter';
 import { User } from '../domain/user';
 import { UserResponse } from './responses/user-response.dto';
 
 @Injectable()
-export class UserControllerResponseAdapter {
+export class UserResponseAdapter {
   constructor(
-    private readonly resourceControllerResponseAdapter: ResourceControllerResponseAdapter,
+    private readonly resourceResponseAdapter: ResourceResponseAdapter,
   ) {}
 
   adaptUser(user: User): UserResponse {
     const resources = user.resources.map((resource) =>
-      this.resourceControllerResponseAdapter.adaptResourceForUserResponse(
-        resource,
-      ),
+      this.resourceResponseAdapter.adaptResourceForUserResponse(resource),
     );
 
     return {

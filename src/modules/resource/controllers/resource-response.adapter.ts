@@ -3,7 +3,7 @@ import { Resource } from '../domain/resource';
 import { ResourceResponse } from './responses/resource-response.dto';
 
 @Injectable()
-export class ResourceControllerResponseAdapter {
+export class ResourceResponseAdapter {
   adaptResource(resource: Resource): ResourceResponse {
     return {
       id: resource.id,

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../user/repositories/entities/user.entity';
-import { ResourceControllerResponseAdapter } from './controllers/resource-controller-response.adapter';
+import { ResourceResponseAdapter } from './controllers/resource-response.adapter';
 import { ResourceController } from './controllers/resource.controller';
 import { ResourceRepository } from './domain/resource-repository';
 import { ResourceEntity } from './repositories/entities/resource.entity';
@@ -17,13 +17,13 @@ import { ResourceService } from './services/resource/resource.service';
     ResourceService,
     ResourceUtilsService,
     ResourceEntityResponseAdapter,
-    ResourceControllerResponseAdapter,
+    ResourceResponseAdapter,
     { provide: ResourceRepository, useClass: ResourceApiRepository },
   ],
   exports: [
     ResourceRepository,
     ResourceEntityResponseAdapter,
-    ResourceControllerResponseAdapter,
+    ResourceResponseAdapter,
   ],
 })
 export class ResourceModule {}
