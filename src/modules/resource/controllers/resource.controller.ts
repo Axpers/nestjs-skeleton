@@ -23,7 +23,7 @@ import { ResourceResponse } from './responses/resource-response.dto';
 export class ResourceController {
   constructor(
     private readonly resourceService: ResourceService,
-    private readonly ResourceResponseAdapter: ResourceResponseAdapter,
+    private readonly resourceResponseAdapter: ResourceResponseAdapter,
   ) {}
 
   @Get()
@@ -31,7 +31,7 @@ export class ResourceController {
   async getResources(): Promise<ResourceResponse[]> {
     const resources = await this.resourceService.getResources();
     return resources.map((resource) =>
-      this.ResourceResponseAdapter.adaptResource(resource),
+      this.resourceResponseAdapter.adaptResource(resource),
     );
   }
 
@@ -43,7 +43,7 @@ export class ResourceController {
     const resource = await this.resourceService.getResource(
       resourceIdParam.resourceId,
     );
-    return this.ResourceResponseAdapter.adaptResource(resource);
+    return this.resourceResponseAdapter.adaptResource(resource);
   }
 
   @Delete(':resourceId')

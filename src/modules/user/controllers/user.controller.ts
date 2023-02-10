@@ -17,9 +17,7 @@ export class UserController {
   @Roles('admin')
   async getUsers(): Promise<UserResponse[]> {
     const users = await this.userService.getUsers();
-    return users.map((user) =>
-      this.userResponseAdapter.adaptUser(user),
-    );
+    return users.map((user) => this.userResponseAdapter.adaptUser(user));
   }
 
   @Get(':userId')
