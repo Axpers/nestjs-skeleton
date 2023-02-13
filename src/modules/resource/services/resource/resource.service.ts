@@ -27,7 +27,7 @@ export class ResourceService {
 
   async deleteResource(id: string): Promise<void> {
     const resource = await this.getResource(id);
-    this.resourceRepository.deleteResource(resource.id);
+    await this.resourceRepository.deleteResource(resource.id);
   }
 
   async createResource(
