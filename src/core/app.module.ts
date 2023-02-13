@@ -8,10 +8,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { validate } from './schemas/env.validation';
+import { UserEntity } from 'src/modules/user/repositories/entities/user.entity';
+import { ResourceEntity } from 'src/modules/resource/repositories/entities/resource.entity';
+import { ResourceModule } from 'src/modules/resource/resource.module';
 
 @Module({
   imports: [
     UserModule,
+    ResourceModule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true, validate: validate }),
     TypeOrmModule.forRootAsync({
@@ -24,7 +28,7 @@ import { validate } from './schemas/env.validation';
           username: configService.getOrThrow('DB_USERNAME'),
           password: configService.getOrThrow('DB_PASSWORD'),
           database: configService.getOrThrow('DB_DATABASE'),
-          autoLoadEntities: true,
+          entities: [UserEntity, ResourceEntity],
           synchronize: true,
           retryAttempts: 2,
         };
