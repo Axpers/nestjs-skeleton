@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   async createUser(userCreateDto: UserCreateRequest): Promise<void> {
-    await this.utilsService.throwIfUserAlreadyExist(userCreateDto.email);
+    await this.utilsService.throwIfEmailAlreadyTaken(userCreateDto.email);
 
     const hashedPassword = this.encryptionService.getHashedPassword(
       userCreateDto.password,

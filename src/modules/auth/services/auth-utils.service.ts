@@ -7,7 +7,7 @@ import { JwtPayload } from '../domain/jwt-payload';
 export class AuthUtilsService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async throwIfUserAlreadyExist(email: string): Promise<void> {
+  async throwIfEmailAlreadyTaken(email: string): Promise<void> {
     const potentialExistingUser = await this.userRepository.getUserByEmail(
       email,
     );
