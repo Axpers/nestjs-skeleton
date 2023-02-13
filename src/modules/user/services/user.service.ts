@@ -9,7 +9,7 @@ import { EncryptionService } from 'src/core/services/encryption.service';
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly userUtilsService: UserUtilsService,
+    private readonly utilsService: UserUtilsService,
     private readonly encryptionService: EncryptionService,
   ) {}
 
@@ -34,9 +34,9 @@ export class UserService {
     userId: string,
     userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
-    await this.userUtilsService.throwIfUserDoesNotAlreadyExist(userId);
+    await this.utilsService.throwIfUserDoesNotAlreadyExist(userId);
 
-    this.userUtilsService.throwIfRequesterIsNotAllowedToUpdateRoles(
+    this.utilsService.throwIfRequesterIsNotAllowedToUpdateRoles(
       requesterUser,
       userUpdateRequest,
     );

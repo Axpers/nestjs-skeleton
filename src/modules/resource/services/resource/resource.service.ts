@@ -10,7 +10,7 @@ import { ResourceUtilsService } from './resource-utils.service';
 export class ResourceService {
   constructor(
     private readonly resourceRepository: ResourceRepository,
-    private readonly resourceUtilsService: ResourceUtilsService,
+    private readonly utilsService: ResourceUtilsService,
   ) {}
 
   async getResources(): Promise<Resource[]> {
@@ -45,9 +45,7 @@ export class ResourceService {
     resourceId: string,
     resourceUpdateRequest: ResourceUpdateRequest,
   ): Promise<void> {
-    await this.resourceUtilsService.throwIfResourceDoesNotAlreadyExist(
-      resourceId,
-    );
+    await this.utilsService.throwIfResourceDoesNotAlreadyExist(resourceId);
 
     await this.resourceRepository.updateResource(resourceId, {
       ...resourceUpdateRequest,
