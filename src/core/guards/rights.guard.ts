@@ -3,12 +3,13 @@ import {
   ExecutionContext,
   mixin,
   Type,
-  Injectable,
   BadRequestException,
   NotFoundException,
+  Injectable,
 } from '@nestjs/common';
 import { ResourceRepository } from 'src/modules/resource/domain/resource-repository';
 import { User } from 'src/modules/user/domain/user';
+import { UserRepository } from 'src/modules/user/domain/user-repository';
 import {
   RouteParameters,
   RouteParametersType,
@@ -19,7 +20,10 @@ export const RightsGuard = (
 ): Type<CanActivate> => {
   @Injectable()
   class RightsGuardMixin implements CanActivate {
-    constructor(private readonly resourceRepository: ResourceRepository) {}
+    constructor(
+      private readonly userRepository: UserRepository,
+      private readonly resourceRepository: ResourceRepository,
+    ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
@@ -48,17 +52,24 @@ export const RightsGuard = (
       return hasRightsOnUser && hasRightsOnResource;
     }
 
-    private hasRightsOnUser(
+    private async hasRightsOnUser(
       requesterUser: User,
       targetUserId: string | undefined,
-    ): boolean {
+    ): Promise<boolean> {
       if (targetUserId === undefined) {
         throw new BadRequestException(
-          'userId  should have been provided as a request param',
+          'userId should have been provided as a request param',
         );
       }
 
-      const hasSameId = requesterUser.id === targetUserId;
+      const targetUser = await this.userRepository.getUserById(targetUserId);
+      if (targetUser === null) {
+        console.log('inside rights guard, where targetUser is null');
+
+        throw new NotFoundException('Could not find the given user');
+      }
+
+      const hasSameId = requesterUser.id === targetUser.id;
       return hasSameId;
     }
 
