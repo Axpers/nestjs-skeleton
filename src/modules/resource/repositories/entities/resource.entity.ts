@@ -16,7 +16,10 @@ export class ResourceEntity {
   @Column()
   description: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.resources, { eager: false })
+  @ManyToOne(() => UserEntity, (user) => user.resources, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 
   @CreateDateColumn()

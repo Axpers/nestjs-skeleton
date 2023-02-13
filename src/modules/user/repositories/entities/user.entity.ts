@@ -21,7 +21,9 @@ export class UserEntity {
   })
   role: UserRole;
 
-  @OneToMany(() => ResourceEntity, (resource) => resource.user)
+  @OneToMany(() => ResourceEntity, (resource) => resource.user, {
+    cascade: ['remove'],
+  })
   resources: ResourceEntity[];
 
   @Column()
