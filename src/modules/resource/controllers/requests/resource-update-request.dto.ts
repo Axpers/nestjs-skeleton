@@ -1,13 +1,11 @@
-import { IsUUID } from 'class-validator';
-import { ResourceCreateRequest } from './resource-create-request.dto';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class ResourceUpdateRequest extends ResourceCreateRequest {
-  @IsUUID()
-  userId: string;
+export class ResourceUpdateRequest {
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 
-  constructor(description: string, userId: string) {
-    super(description);
-
-    this.userId = userId;
+  constructor(description: string) {
+    this.description = description;
   }
 }
