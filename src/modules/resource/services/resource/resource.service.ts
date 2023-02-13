@@ -17,6 +17,10 @@ export class ResourceService {
     return this.resourceRepository.getResources();
   }
 
+  async getResourcesByUser(user: User): Promise<Resource[]> {
+    return this.resourceRepository.getResourcesByUser(user);
+  }
+
   async getResource(id: string): Promise<Resource> {
     const resource = await this.resourceRepository.getResourceById(id);
 

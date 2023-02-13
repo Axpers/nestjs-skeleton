@@ -36,6 +36,16 @@ export class ResourceController {
     );
   }
 
+  @Get(`user/:${RouteParameters.UserId}`)
+  @UseGuards(RightsGuard('userId'))
+  async getResourcesByUser(@GetUser() user: User): Promise<ResourceResponse[]> {
+    const resources = await this.resourceService.getResourcesByUser(user);
+
+    return resources.map((resource) =>
+      this.resourceResponseAdapter.adaptResource(resource),
+    );
+  }
+
   @Get(`:${RouteParameters.ResourceId}`)
   @UseGuards(RightsGuard('resourceId'))
   async getResource(

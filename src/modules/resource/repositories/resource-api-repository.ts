@@ -34,6 +34,25 @@ export class ResourceApiRepository implements ResourceRepository {
     );
   }
 
+  async getResourcesByUser(user: User): Promise<Resource[]> {
+    const userEntity = await this.getUserEntity(user);
+
+    const resourceEntities = await this.resourceRepository.find({
+      where: {
+        user: {
+          id: userEntity.id,
+        },
+      },
+      relations: {
+        user: true,
+      },
+    });
+
+    return resourceEntities.map((resourceEntity) =>
+      this.resourceEntityAdapter.adaptResource(resourceEntity),
+    );
+  }
+
   async getResourceById(id: string): Promise<Resource | null> {
     const resourceEntity = await this.resourceRepository.findOne({
       where: {

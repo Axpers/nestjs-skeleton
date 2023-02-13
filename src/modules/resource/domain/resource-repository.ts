@@ -6,6 +6,8 @@ import { Resource } from './resource';
 export abstract class ResourceRepository {
   abstract getResources(): Promise<Resource[]>;
 
+  abstract getResourcesByUser(user: User): Promise<Resource[]>;
+
   abstract getResourceById(id: string): Promise<Resource | null>;
 
   abstract deleteResource(id: string): Promise<void>;
