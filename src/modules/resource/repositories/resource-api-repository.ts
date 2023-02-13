@@ -56,14 +56,7 @@ export class ResourceApiRepository implements ResourceRepository {
     user: User,
     resourceCreateRequest: ResourceCreateRequest,
   ): Promise<void> {
-    const userEntity = await this.userRepository.findOneBy({ id: user.id });
-
-    if (userEntity === null) {
-      // This case should never happen
-      throw new InternalServerErrorException(
-        'Authenticated and fetched user do not match',
-      );
-    }
+    const userEntity = await this.getUserEntity(user);
 
     const resourceEntity = this.resourceRepository.create({
       ...resourceCreateRequest,
@@ -77,5 +70,25 @@ export class ResourceApiRepository implements ResourceRepository {
     resourceUpdateRequest: ResourceUpdateRequest,
   ): Promise<void> {
     await this.resourceRepository.update(resourceId, resourceUpdateRequest);
+  }
+
+  private async getUserEntity(user: User): Promise<UserEntity> {
+    const userEntity = await this.userRepository.findOne({
+      where: {
+        id: user.id,
+      },
+      relations: {
+        resources: false,
+      },
+    });
+
+    if (userEntity === null) {
+      // This case should never happen
+      throw new InternalServerErrorException(
+        'Authenticated and fetched user do not match',
+      );
+    }
+
+    return userEntity;
   }
 }
