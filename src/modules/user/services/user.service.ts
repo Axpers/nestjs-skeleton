@@ -34,8 +34,10 @@ export class UserService {
     userId: string,
     userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
-    await this.utilsService.throwIfUserDoesNotAlreadyExist(userId);
-
+    await this.utilsService.throwIfEmailAlreadyTaken(
+      userId,
+      userUpdateRequest.email,
+    );
     this.utilsService.throwIfRequesterIsNotAllowedToUpdateRoles(
       requesterUser,
       userUpdateRequest,
