@@ -11,8 +11,8 @@ export class AuthUtilsService {
     const potentialExistingUser = await this.userRepository.getUserByEmail(
       email,
     );
-    const isUsernameAlreadyTaken = potentialExistingUser?.email === email;
-    if (isUsernameAlreadyTaken) {
+    const isEmailAlreadyTaken = potentialExistingUser?.email === email;
+    if (isEmailAlreadyTaken) {
       throw new ConflictException('Email already taken');
     }
   }
