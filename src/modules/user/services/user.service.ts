@@ -30,10 +30,16 @@ export class UserService {
   }
 
   async updateUser(
+    requesterUser: User,
     userId: string,
     userUpdateRequest: UserUpdateRequest,
   ): Promise<void> {
     await this.userUtilsService.throwIfUserDoesNotAlreadyExist(userId);
+
+    this.userUtilsService.throwIfRequesterIsNotAllowedToUpdateRoles(
+      requesterUser,
+      userUpdateRequest,
+    );
 
     const hashedPassword = this.encryptionService.getHashedPassword(
       userUpdateRequest.password,

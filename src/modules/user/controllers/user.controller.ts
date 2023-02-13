@@ -15,6 +15,8 @@ import { UserUpdateRequest } from './requests/user-update-request.dto';
 import { Roles } from 'src/core/decorators/roles.decorator';
 import { RightsGuard } from 'src/core/guards/rights.guard';
 import { RouteParameters } from 'src/core/parameters/route-parameters';
+import { GetUser } from 'src/core/decorators/get-user.decorator';
+import { User } from '../domain/user';
 
 @Controller('users')
 export class UserController {
@@ -48,7 +50,12 @@ export class UserController {
   async updateUser(
     @Param() userIdParam: UserIdParam,
     @Body() userUpdateRequest: UserUpdateRequest,
+    @GetUser() requesterUser: User,
   ): Promise<void> {
-    await this.userService.updateUser(userIdParam.userId, userUpdateRequest);
+    await this.userService.updateUser(
+      requesterUser,
+      userIdParam.userId,
+      userUpdateRequest,
+    );
   }
 }
