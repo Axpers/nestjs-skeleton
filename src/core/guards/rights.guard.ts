@@ -39,14 +39,14 @@ export const RightsGuard = (
       const targetUserId: string | undefined =
         requestParameters[RouteParameters.UserId];
       const hasRightsOnUser = isUserTargeted
-        ? this.hasRightsOnUser(requesterUser, targetUserId)
+        ? await this.hasRightsOnUser(requesterUser, targetUserId)
         : true;
 
       const isResourceTargeted = targetParameters.includes('resourceId');
       const targetResourceId: string | undefined =
         requestParameters[RouteParameters.ResourceId];
       const hasRightsOnResource = isResourceTargeted
-        ? this.hasRightsOnResource(requesterUser, targetResourceId)
+        ? await this.hasRightsOnResource(requesterUser, targetResourceId)
         : true;
 
       return hasRightsOnUser && hasRightsOnResource;
