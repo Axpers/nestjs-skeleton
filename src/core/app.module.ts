@@ -11,6 +11,7 @@ import { validate } from './schemas/env.validation';
 import { UserEntity } from 'src/modules/user/repositories/entities/user.entity';
 import { ResourceEntity } from 'src/modules/resource/repositories/entities/resource.entity';
 import { ResourceModule } from 'src/modules/resource/resource.module';
+import { RightsGuard } from './guards/rights.guard';
 
 @Module({
   imports: [
@@ -44,6 +45,10 @@ import { ResourceModule } from 'src/modules/resource/resource.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RightsGuard,
     },
   ],
 })
