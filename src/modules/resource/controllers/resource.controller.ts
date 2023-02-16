@@ -6,11 +6,10 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
 import { GetUser } from 'src/core/decorators/get-user.decorator';
+import { Rights } from 'src/core/decorators/rights.decorator';
 import { Roles } from 'src/core/decorators/roles.decorator';
-import { RightsGuard } from 'src/core/guards/rights.guard';
 import { RouteParameters } from 'src/core/parameters/route-parameters';
 import { ResourceIdParam } from 'src/modules/resource/controllers/requests/parameters/resource-id-param.dto';
 import { User } from 'src/modules/user/domain/user';
@@ -37,7 +36,7 @@ export class ResourceController {
   }
 
   @Get(`user/:${RouteParameters.UserId}`)
-  @UseGuards(RightsGuard('userId'))
+  @Rights('userId')
   async getResourcesByUser(@GetUser() user: User): Promise<ResourceResponse[]> {
     const resources = await this.resourceService.getResourcesByUser(user);
 
@@ -47,7 +46,7 @@ export class ResourceController {
   }
 
   @Get(`:${RouteParameters.ResourceId}`)
-  @UseGuards(RightsGuard('resourceId'))
+  @Rights('resourceId')
   async getResource(
     @Param() resourceIdParam: ResourceIdParam,
   ): Promise<ResourceResponse> {
@@ -58,7 +57,7 @@ export class ResourceController {
   }
 
   @Delete(`:${RouteParameters.ResourceId}`)
-  @UseGuards(RightsGuard('resourceId'))
+  @Rights('resourceId')
   async deleteResource(
     @Param() resourceIdParam: ResourceIdParam,
   ): Promise<void> {
@@ -74,7 +73,7 @@ export class ResourceController {
   }
 
   @Put(`:${RouteParameters.ResourceId}`)
-  @UseGuards(RightsGuard('resourceId'))
+  @Rights('resourceId')
   async updateResource(
     @Param() resourceIdParam: ResourceIdParam,
     @Body() resourceUpdateRequest: ResourceUpdateRequest,
