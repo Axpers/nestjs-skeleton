@@ -7,7 +7,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
-import { validate } from './schemas/env.validation';
+import { validateSchema } from './schemas/env.schema';
 import { UserEntity } from 'src/modules/user/repositories/entities/user.entity';
 import { ResourceEntity } from 'src/modules/resource/repositories/entities/resource.entity';
 import { ResourceModule } from 'src/modules/resource/resource.module';
@@ -18,7 +18,7 @@ import { RightsGuard } from './guards/rights.guard';
     UserModule,
     ResourceModule,
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true, validate: validate }),
+    ConfigModule.forRoot({ isGlobal: true, validate: validateSchema }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {

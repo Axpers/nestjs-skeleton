@@ -52,7 +52,7 @@ class EnvironmentVariables {
   }
 }
 
-export function validate(
+export function validateSchema(
   config: Record<string, unknown>,
 ): EnvironmentVariables {
   const validatedConfig = plainToInstance(EnvironmentVariables, config);
