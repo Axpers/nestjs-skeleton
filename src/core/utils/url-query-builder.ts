@@ -2,13 +2,14 @@ import { isNotEmpty } from 'class-validator';
 
 export class UrlQueryBuilder {
   private queryUrl: string;
+  private readonly queryUrlDefaultValue = '?';
 
   constructor() {
-    this.queryUrl = '?';
+    this.queryUrl = this.queryUrlDefaultValue;
   }
 
   toString(): string {
-    return this.queryUrl !== '?' ? this.queryUrl : '';
+    return this.queryUrl !== this.queryUrlDefaultValue ? this.queryUrl : '';
   }
 
   addIfValid(key: string, value: string | number | boolean): this {
@@ -25,7 +26,7 @@ export class UrlQueryBuilder {
   }
 
   private addStartOfQueryParam(): this {
-    if (this.queryUrl !== '?') {
+    if (this.queryUrl !== this.queryUrlDefaultValue) {
       this.queryUrl += '&';
     }
     return this;
