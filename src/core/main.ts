@@ -16,6 +16,8 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  app.enableCors();
+
   app.use(morgan('dev'));
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
